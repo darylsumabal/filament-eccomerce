@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -14,6 +15,12 @@ class ProductForm
     {
         return $schema
             ->components([
+                FileUpload::make('image')
+                    ->label('Image')
+                    ->image()
+                    ->directory('products')
+                    ->required()
+                    ->columnSpanFull(),
                 Grid::make()->columns(3)->schema([
                     TextInput::make('name')
                         ->label('Name')
@@ -36,7 +43,8 @@ class ProductForm
                 ])->columnSpanFull(),
                 Textarea::make('description')
                     ->label('Description')
-                    ->maxLength(65535)->columnSpanFull(),
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
             ]);
     }
 }

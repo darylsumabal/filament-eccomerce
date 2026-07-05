@@ -14,7 +14,8 @@ class CategoryForm
                 TextInput::make('name')
                     ->label('Name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
             ]);
     }
 }
