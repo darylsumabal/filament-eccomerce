@@ -12,4 +12,9 @@ use Spatie\Sluggable\Attributes\Sluggable;
 class Category extends Model
 {
     use SoftDeletes;
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
