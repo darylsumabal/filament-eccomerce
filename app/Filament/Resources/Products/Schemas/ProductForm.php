@@ -18,7 +18,9 @@ class ProductForm
                 FileUpload::make('image')
                     ->label('Image')
                     ->image()
+                    ->disk('public')
                     ->directory('products')
+                    ->visibility('public')
                     ->required()
                     ->columnSpanFull(),
                 Grid::make()->columns(3)->schema([
