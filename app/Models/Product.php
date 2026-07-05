@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\Attributes\Sluggable;
@@ -11,7 +12,7 @@ use Spatie\Sluggable\Attributes\Sluggable;
 #[Sluggable(from: 'name', to: 'slug')]
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     public function category()
     {
