@@ -3,8 +3,6 @@
 namespace App\Filament\Clusters\Product\Resources\Coffees;
 
 use App\Filament\Clusters\Product\ProductCluster;
-use App\Filament\Clusters\Product\Resources\Coffees\Pages\CreateCoffee;
-use App\Filament\Clusters\Product\Resources\Coffees\Pages\EditCoffee;
 use App\Filament\Clusters\Product\Resources\Coffees\Pages\ListCoffees;
 use App\Filament\Clusters\Product\Resources\Coffees\Schemas\CoffeeForm;
 use App\Filament\Clusters\Product\Resources\Coffees\Tables\CoffeesTable;
