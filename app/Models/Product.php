@@ -12,7 +12,7 @@ use Spatie\Sluggable\Attributes\Sluggable;
 #[Sluggable(from: 'name', to: 'slug')]
 class Product extends Model
 {
-    use SoftDeletes, HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function category()
     {
