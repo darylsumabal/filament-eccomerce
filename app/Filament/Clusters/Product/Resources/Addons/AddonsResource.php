@@ -3,8 +3,6 @@
 namespace App\Filament\Clusters\Product\Resources\Addons;
 
 use App\Filament\Clusters\Product\ProductCluster;
-use App\Filament\Clusters\Product\Resources\Addons\Pages\CreateAddons;
-use App\Filament\Clusters\Product\Resources\Addons\Pages\EditAddons;
 use App\Filament\Clusters\Product\Resources\Addons\Pages\ListAddons;
 use App\Filament\Clusters\Product\Resources\Addons\Schemas\AddonsForm;
 use App\Filament\Clusters\Product\Resources\Addons\Tables\AddonsTable;
