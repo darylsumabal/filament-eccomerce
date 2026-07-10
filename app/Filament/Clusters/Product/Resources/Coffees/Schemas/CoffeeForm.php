@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Products\Schemas;
+namespace App\Filament\Clusters\Product\Resources\Coffees\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -9,7 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 
-class ProductForm
+class CoffeeForm
 {
     public static function configure(Schema $schema): Schema
     {

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\Products;
+namespace App\Filament\Clusters\Product\Resources\Coffees;
 
-use App\Filament\Resources\Products\Pages\CreateProduct;
-use App\Filament\Resources\Products\Pages\EditProduct;
-use App\Filament\Resources\Products\Pages\ListProducts;
-use App\Filament\Resources\Products\Schemas\ProductForm;
-use App\Filament\Resources\Products\Tables\ProductsTable;
+use App\Filament\Clusters\Product\ProductCluster;
+use App\Filament\Clusters\Product\Resources\Coffees\Pages\CreateCoffee;
+use App\Filament\Clusters\Product\Resources\Coffees\Pages\EditCoffee;
+use App\Filament\Clusters\Product\Resources\Coffees\Pages\ListCoffees;
+use App\Filament\Clusters\Product\Resources\Coffees\Schemas\CoffeeForm;
+use App\Filament\Clusters\Product\Resources\Coffees\Tables\CoffeesTable;
 use App\Models\Product;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -16,22 +17,22 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductResource extends Resource
+class CoffeeResource extends Resource
 {
     protected static ?string $model = Product::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Truck;
 
-    protected static ?string $recordTitleAttribute = 'Product';
+    protected static ?string $cluster = ProductCluster::class;
 
     public static function form(Schema $schema): Schema
     {
-        return ProductForm::configure($schema);
+        return CoffeeForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return ProductsTable::configure($table);
+        return CoffeesTable::configure($table);
     }
 
     public static function getRelations(): array
@@ -44,9 +45,7 @@ class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListProducts::route('/'),
-            'create' => CreateProduct::route('/create'),
-            'edit' => EditProduct::route('/{record}/edit'),
+            'index' => ListCoffees::route('/'),
         ];
     }
 

@@ -6,16 +6,10 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Sluggable\Attributes\Sluggable;
 
-#[Fillable(['slug', 'name'])]
-#[Sluggable(from: 'name', to: 'slug')]
-class Category extends Model
+#[Fillable(['name', 'price'])]
+class Addons extends Model
 {
+    /** @use HasFactory<\Database\Factories\AddonsFactory> */
     use HasFactory, SoftDeletes;
-
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
 }

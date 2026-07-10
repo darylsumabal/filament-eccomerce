@@ -28,7 +28,7 @@ new class extends Component {
             <div class="p-4 w-full space-y-5">
                 <img src="{{ Storage::url($coffee->image) }}" alt="Burger" class="h-90 rounded-md" />
                 <p class="text-2xl font-black">{{ $coffee->name }}</p>
-                <p class="font-medium">{{ $coffee->description }}</p>
+                <p class="font-medium text-ellipsis">{{ $coffee->description }}</p>
                 <div class="flex items-center justify-between">
                     <p class="font-bold">PHP. {{ $coffee->price }}</p>
                     <button class="bg-[#2A0000] text-white rounded-md px-4 py-2 text-sm">Order Now</button>
