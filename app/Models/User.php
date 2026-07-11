@@ -69,9 +69,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants, PasskeyU
         }
 
         return false;
-
-        // Option B: Restrict access (e.g., only users with @example.com emails)
-        // return str_ends_with($this->email, '@example.com');
     }
 
     /**
