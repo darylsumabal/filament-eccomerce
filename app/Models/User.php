@@ -37,30 +37,43 @@ use Spatie\Permission\Traits\HasRoles;
  */
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
-class User extends Authenticatable implements PasskeyUser, FilamentUser, HasTenants
+class User extends Authenticatable implements FilamentUser, HasTenants, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasRoles, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
+
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);
     }
+
     public function getTenants(Panel $panel): Collection
     {
         return $this->teams;
     }
+
     public function canAccessTenant(Model $tenant): bool
     {
         return $this->teams()->whereKey($tenant)->exists();
     }
+
     public function canAccessPanel(Panel $panel): bool
     {
-        // Option A: Allow all users to access the panel (useful for local development)
-        return true;
+
+        if ($panel->getId() == 'super-admin') {
+            return $this->hasRole('super_admin');
+        }
+
+        if ($panel->getId() == 'admin') {
+            return $this->hasRole('admin');
+        }
+
+        return false;
 
         // Option B: Restrict access (e.g., only users with @example.com emails)
         // return str_ends_with($this->email, '@example.com');
     }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -82,7 +95,7 @@ class User extends Authenticatable implements PasskeyUser, FilamentUser, HasTena
         $initials = Str::initials($this->name, true);
 
         return Str::length($initials) > 1
-            ? Str::substr($initials, 0, 1) . Str::substr($initials, -1)
+            ? Str::substr($initials, 0, 1).Str::substr($initials, -1)
             : $initials;
     }
 }
