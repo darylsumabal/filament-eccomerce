@@ -3,13 +3,11 @@
 namespace App\Providers\Filament;
 
 use App\Filament\SuperAdmin\Pages\SuperAdminRegister;
-use App\Filament\SuperAdmin\Resources\Roles\RoleResource;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -30,6 +28,7 @@ class SuperAdminPanelProvider extends PanelProvider
             ->id('super-admin')
             ->path('super-admin')
             ->topbar(false)
+            ->sidebarCollapsibleOnDesktop()
             ->login()
             ->registration(SuperAdminRegister::class)
             ->spa(hasPrefetching: true)
@@ -40,9 +39,6 @@ class SuperAdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/SuperAdmin/Resources'), for: 'App\Filament\SuperAdmin\Resources')
             ->discoverPages(in: app_path('Filament/SuperAdmin/Pages'), for: 'App\Filament\SuperAdmin\Pages')
-            ->pages([
-                Dashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/SuperAdmin/Widgets'), for: 'App\Filament\SuperAdmin\Widgets')
             ->widgets([
                 AccountWidget::class,
