@@ -31,6 +31,8 @@ class SuperAdminPanelProvider extends PanelProvider
             ->topbar(false)
             ->login()
             ->registration(SuperAdminRegister::class)
+            ->spa(hasPrefetching: true)
+            ->globalSearch(false)
             ->plugins([FilamentShieldPlugin::make()])
             ->colors([
                 'primary' => Color::Amber,

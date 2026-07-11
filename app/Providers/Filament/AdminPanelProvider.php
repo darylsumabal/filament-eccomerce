@@ -33,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->tenant(Team::class)
             ->spa(hasPrefetching: true)
+            ->globalSearch(false)
             ->topbar(false)
             ->sidebarCollapsibleOnDesktop()
             ->colors([
