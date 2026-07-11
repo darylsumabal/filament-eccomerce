@@ -28,6 +28,7 @@
     </div>
     {{ $slot }}
     @livewireScripts()
+    @fluxScripts
 </body>
 
 </html>

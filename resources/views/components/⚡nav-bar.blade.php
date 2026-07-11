@@ -2,9 +2,7 @@
 
 use Livewire\Component;
 
-new class extends Component {
-    //
-};
+new class extends Component {};
 ?>
 
 <nav class="flex text-white items-center py-10 justify-between w-full">
@@ -16,20 +14,33 @@ new class extends Component {
         <flux:navbar.item href="/shop">SHOP</flux:navbar.item>
         <flux:navbar.item href="/login">LOGIN</flux:navbar.item>
     </flux:navbar>
-    <div>
+    <div x-data="{ cart: JSON.parse(localStorage.getItem('cart') || '[]') }" x-init="window.addEventListener('cart-updated', e => cart = e.detail)">
         <div class="drawer drawer-end">
             <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
-                <!-- Page content here -->
-                <label for="my-drawer-5" class="drawer-button btn bg-white border-0 btn-circle"> <flux:icon.shopping-cart variant="solid"
-                        class="text-black drawer-button" /></label>
+                <label for="my-drawer-5" class="drawer-button btn bg-white border-0 btn-circle relative">
+                    <flux:icon.shopping-cart variant="solid" class="text-black drawer-button" />
+                    <span x-show="cart.length > 0" x-text="cart.length"
+                        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"></span>
+                </label>
             </div>
             <div class="drawer-side">
                 <label for="my-drawer-5" aria-label="close sidebar" class="drawer-overlay"></label>
-                <ul class="menu bg-base-200 min-h-full w-80 p-4">
-                    <!-- Sidebar content here -->
-                    <li><a>Sidebar Item 1</a></li>
-                    <li><a>Sidebar Item 2</a></li>
+                <ul class="menu bg-base-200 min-h-full w-80 p-4 space-y-4">
+                    <template x-for="(item, index) in cart" :key="index">
+                        <li>
+                            <div class="flex flex-col justify-between items-center">
+                                <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt="">
+                                <flux:textarea rows="auto" x-model="item.note ?? ''" />
+                                <div class="flex justify-between w-full">
+                                    <span x-text="item.coffee?.name ?? 'Item'"></span>
+                                    <span class="text-sm text-gray-500"
+                                        x-text="'PHP. ' + (item.coffee?.price ?? '')"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </template>
+                    <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
                 </ul>
             </div>
         </div>

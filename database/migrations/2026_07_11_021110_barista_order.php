@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,14 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('barista_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Order::class);
             $table->foreignIdFor(Team::class);
-            $table->string('customer_name');
-            $table->string('receipt');
-            $table->text('note');
-            $table->json('order');
-            $table->softDeletes();
+            $table->string('action')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('barista_orders');
     }
 };
