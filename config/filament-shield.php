@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Filament\SuperAdmin\Resources\Roles\RoleResource as RolesRoleResource;
+use App\Filament\SuperAdmin\Resources\Teams\TeamResource;
+use App\Filament\SuperAdmin\Resources\Users\UserResource;
 use BezhanSalleh\FilamentShield\Resources\Roles\RoleResource;
 use Filament\Pages\Dashboard;
 use Filament\Widgets\AccountWidget;
@@ -73,7 +76,7 @@ return [
     'super_admin' => [
         'enabled' => true,
         'name' => 'super_admin',
-        'define_via_gate' => false,
+        'define_via_gate' => true,
         'intercept_gate' => 'before',
     ],
 
@@ -190,7 +193,9 @@ return [
             ],
         ],
         'exclude' => [
-            //
+            UserResource::class,
+            TeamResource::class,
+            RolesRoleResource::class
         ],
     ],
 
