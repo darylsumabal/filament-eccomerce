@@ -13,7 +13,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -32,7 +33,11 @@ class UserResource extends Resource
     {
         return UsersTable::configure($table);
     }
-
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->whereNot('id', Auth::id());
+    }
     public static function getRelations(): array
     {
         return [
