@@ -14,7 +14,6 @@ use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Laravel\assertSoftDeleted;
 use function Pest\Livewire\livewire;
 
-
 beforeEach(function () {
     $user = User::factory()->create();
     $this->product = Product::factory()->create();
@@ -51,7 +50,6 @@ test('an admin can create a product', function () {
     Storage::disk('public')->assertExists($product->image);
 });
 
-
 test('an admin can edit the product', function () {
     $image = UploadedFile::fake()->image('product-image.jpg');
     livewire(EditProduct::class, [
@@ -64,7 +62,7 @@ test('an admin can edit the product', function () {
     ])->call('save')
         ->assertHasNoFormErrors()
         ->assertNotified();
-        
+
     assertDatabaseHas(Product::class, [
         'id' => $this->product->id,
         'name' => 'Updated Product',
