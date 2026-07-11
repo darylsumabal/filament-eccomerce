@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use BezhanSalleh\FilamentShield\Resources\Roles\RoleResource;
 use Filament\Pages\Dashboard;
 use Filament\Widgets\AccountWidget;
@@ -29,6 +30,7 @@ return [
             'resources' => true,
             'custom_permissions' => false,
         ],
+        'is_scoped_to_tenant' => false,
     ],
 
     /*
@@ -43,7 +45,6 @@ return [
     */
 
     'tenant_model' => 'App\Models\Team',
-
 
     /*
     |--------------------------------------------------------------------------
@@ -127,8 +128,18 @@ return [
         'merge' => true,
         'generate' => true,
         'methods' => [
-            'viewAny', 'view', 'create', 'update', 'delete', 'deleteAny', 'restore',
-            'forceDelete', 'forceDeleteAny', 'restoreAny', 'replicate', 'reorder',
+            'viewAny',
+            'view',
+            'create',
+            'update',
+            'delete',
+            'deleteAny',
+            'restore',
+            'forceDelete',
+            'forceDeleteAny',
+            'restoreAny',
+            'replicate',
+            'reorder',
         ],
         'single_parameter_methods' => [
             'viewAny',
@@ -247,7 +258,7 @@ return [
     */
 
     'discovery' => [
-        'discover_all_resources' => false,
+        'discover_all_resources' => true,
         'discover_all_widgets' => false,
         'discover_all_pages' => false,
     ],

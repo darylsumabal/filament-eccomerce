@@ -2,7 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use BezhanSalleh\FilamentShield\FilamentShield;
+use App\Filament\SuperAdmin\Pages\SuperAdminRegister;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -30,7 +30,7 @@ class SuperAdminPanelProvider extends PanelProvider
             ->path('super-admin')
             ->topbar(false)
             ->login()
-            ->registration()
+            ->registration(SuperAdminRegister::class)
             ->plugins([FilamentShieldPlugin::make()])
             ->colors([
                 'primary' => Color::Amber,
