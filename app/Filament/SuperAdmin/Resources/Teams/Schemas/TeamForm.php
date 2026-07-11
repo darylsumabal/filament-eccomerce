@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\SuperAdmin\Resources\Users\Schemas;
+namespace App\Filament\SuperAdmin\Resources\Teams\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class UserForm
+class TeamForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('name'),
+                TextInput::make('name')
             ]);
     }
 }

@@ -32,10 +32,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->tenant(Team::class)
-            ->registration()
             ->spa(hasPrefetching: true)
             ->topbar(false)
-            ->tenantRegistration(RegisterTeam::class)
             ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => Color::Amber,

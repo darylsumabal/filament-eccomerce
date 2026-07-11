@@ -28,6 +28,7 @@ class SuperAdminPanelProvider extends PanelProvider
         return $panel
             ->id('super-admin')
             ->path('super-admin')
+            ->topbar(false)
             ->login()
             ->registration()
             ->plugins([FilamentShieldPlugin::make()])
