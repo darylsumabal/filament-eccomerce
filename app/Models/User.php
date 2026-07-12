@@ -65,7 +65,8 @@ class User extends Authenticatable implements FilamentUser, HasTenants, PasskeyU
         }
 
         if ($panel->getId() == 'admin') {
-            return $this->hasRole('admin');
+            return $this->hasAnyRole($this->roles->pluck('name')->toArray())
+                && ! $this->hasRole('super_admin');
         }
 
         return false;
@@ -92,7 +93,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants, PasskeyU
         $initials = Str::initials($this->name, true);
 
         return Str::length($initials) > 1
-            ? Str::substr($initials, 0, 1).Str::substr($initials, -1)
+            ? Str::substr($initials, 0, 1) . Str::substr($initials, -1)
             : $initials;
     }
 }
