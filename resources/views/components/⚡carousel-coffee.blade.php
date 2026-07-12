@@ -26,7 +26,8 @@ new class extends Component {
         @foreach ($this->coffees as $coffee)
             <div class="carousel-item border-2 rounded-md h-142 w-90 bg-[#E2D9C8] border-[#e2bf7d]">
                 <div class="p-4 w-full space-y-5">
-                    <img src="{{ Storage::url($coffee->image) }}" alt="Burger" class="h-90 rounded-md" />
+                    <img src="{{ $coffee->image ? Storage::url($coffee->image) : asset('/coffee_alt.jpg') }}"
+                        alt="/coffee_alt.jpg" class="h-90 rounded-md" />
                     <p class="text-2xl font-black">{{ $coffee->name }}</p>
                     <p class="font-medium line-clamp-2 break-all">{{ $coffee->description }}</p>
                     <div class="flex items-center justify-between">
