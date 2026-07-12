@@ -31,6 +31,10 @@
     --color-accent-foreground: var(--color-white);
 }
 
+button {
+    cursor: pointer;
+}
+
 @layer theme {
     .dark {
         --color-accent: var(--color-white);

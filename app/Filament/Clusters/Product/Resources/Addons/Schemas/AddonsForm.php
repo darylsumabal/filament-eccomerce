@@ -21,7 +21,7 @@ class AddonsForm
                         ->label('Price')
                         ->numeric()
                         ->required()
-                        ->prefix('$'),
+                        ->prefix('₱'),
                 ])->columnSpanFull(),
             ]);
     }

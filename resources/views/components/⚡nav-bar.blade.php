@@ -14,7 +14,7 @@ new class extends Component {};
         <flux:navbar.item href="/shop">SHOP</flux:navbar.item>
         <flux:navbar.item href="/login">LOGIN</flux:navbar.item>
     </flux:navbar>
-    <div x-data="{ cart: JSON.parse(localStorage.getItem('cart') || '[]') }" x-init="window.addEventListener('cart-updated', e => cart = e.detail)">
+    <div x-data="{ cart: JSON.parse(localStorage.getItem('cart-items') || '[]') }" x-init="window.addEventListener('cart-updated', e => cart = e.detail)">
         <div class="drawer drawer-end">
             <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
@@ -29,14 +29,26 @@ new class extends Component {};
                 <ul class="menu bg-base-200 min-h-full w-80 p-4 space-y-4">
                     <template x-for="(item, index) in cart" :key="index">
                         <li>
-                            <div class="flex flex-col justify-between items-center">
-                                <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt="">
-                                <flux:textarea rows="auto" x-model="item.note ?? ''" />
-                                <div class="flex justify-between w-full">
-                                    <span x-text="item.coffee?.name ?? 'Item'"></span>
-                                    <span class="text-sm text-gray-500"
-                                        x-text="'PHP. ' + (item.coffee?.price ?? '')"></span>
+                            <div class="flex flex-col justify-between items-center border-2 p-0">
+                                <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt=""
+                                    class="h-44 w-full">
+                                <flux:button size="xs" icon="plus-circle">Addons</flux:button>
+                                <div class="p-2 w-full space-y-2">
+                                    <flux:textarea rows="auto" x-model="item.note" />
+                                    <div class="flex flex-col justify-between">
+                                        <div class="flex justify-between w-full">
+                                            <span x-text="item.coffee?.name ?? 'Item'"></span>
+                                            <span class="text-sm" x-text="'PHP. ' + (item.coffee?.price ?? '')"></span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-sm">
+                                            <p>Total:</p>
+                                            <p>300</p>
+                                        </div>
+                                    </div>
+                                    <flux:button icon="trash" />
+
                                 </div>
+
                             </div>
                         </li>
                     </template>

@@ -20,6 +20,7 @@ class AddonsFactory extends Factory
         return [
             'name' => fake()->word(),
             'price' => fake()->randomFloat(2, 1, 100),
+            'team_id' => 1,
         ];
     }
 }
