@@ -31,8 +31,13 @@ new class extends Component {
 
     public function addToCart()
     {
+        $addons = Addons::whereIn('id', $this->addons)
+            ->get()
+            ->map(fn ($addon) => $addon->only(['id', 'name', 'price']))
+            ->values();
+
         $shapedData = [
-            'addons' => $this->addons,
+            'addons' => $addons,
             'coffee' => $this->selectedCoffee->only(['id', 'name', 'description', 'price', 'image']),
             'note' => $this->note,
         ];
@@ -47,23 +52,17 @@ new class extends Component {
 
 <div class="flex flex-col justify-center items-center mt-10 gap-4">
     <div class="grid grid-cols-4 items-center gap-4">
-        @php
-            logger($this->coffees);
-
-        @endphp
         @foreach ($this->coffees as $coffee)
             <div class="carousel-item border-2 rounded-md h-142 w-90 bg-[#E2D9C8] border-[#e2bf7d]">
                 <div class="p-4 w-full flex flex-col justify-between">
                     <img src="{{ $coffee->image ? Storage::url($coffee->image) : asset('/coffee_alt.jpg') }}"
-                        alt="/coffee_alt.jpg" class="h-90 rounded-md" />
+                        alt="/coffee_alt.jpg" class="h-90 rounded-md w-full" />
                     <p class="text-2xl font-black">{{ $coffee->name }}</p>
                     <p class="font-medium line-clamp-2 break-all">{{ $coffee->description }}</p>
                     <div class="flex items-center justify-between">
                         <p class="font-bold">PHP. {{ $coffee->price }}</p>
                         <button class="bg-[#2A0000] text-white rounded-md px-4 py-2 text-sm" popovertarget="my-modal-2"
                             wire:click="getCoffee({{ $coffee->id }})">Add to cart</button>
-
-
                     </div>
                 </div>
             </div>
@@ -72,20 +71,21 @@ new class extends Component {
 
     {{ $this->coffees->links() }}
 
-    <div class="modal text-white!" id="my-modal-2" popover>
+    <div x-data="{ cart: $persist([]).as('cart-items') }" x-on:add-to-cart.window="cart.push($event.detail.item)" class="modal text-white!"
+        id="my-modal-2" popover>
         <div class="modal-box w-96">
             @if ($selectedCoffee)
                 <h3 class="font-bold text-lg">Add {{ $selectedCoffee->name }} to cart?</h3>
-                <img src="{{ $coffee->image ? Storage::url($coffee->image) : asset('/coffee_alt.jpg') }}"
-                    alt="/coffee_alt.jpg" class="h-90! rounded-md" />
-                <p class="py-2 text-sm">{{ $selectedCoffee->description }}</p>
+                <img src="{{ $selectedCoffee->image ? Storage::url($selectedCoffee->image) : asset('/coffee_alt.jpg') }}"
+                    alt="/coffee_alt.jpg" class="h-90! w-full rounded-md" />
+                <p class="py-2 text-sm line-clamp-2">{{ $selectedCoffee->description }}</p>
                 <p class="font-black mt-2 text-[#e2bf7d]">Price: PHP. {{ $selectedCoffee->price }}</p>
                 <flux:textarea rows="auto" wire:model="note" label="Order notes" placeholder="Enter note..." />
             @else
                 <p class="py-4">Loading coffee details...</p>
             @endif
             <div class="mt-4">
-                <flux:checkbox.group wire:model="addons" label="Addons">
+                <flux:checkbox.group wire:model="addons" label="Addons" class="h-20 overflow-y-scroll">
                     @foreach ($this->availableAddons as $addon)
                         <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
                             value="{{ $addon->id }}" />
