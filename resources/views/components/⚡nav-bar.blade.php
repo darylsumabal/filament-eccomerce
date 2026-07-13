@@ -14,7 +14,7 @@ new class extends Component {};
         <flux:navbar.item href="/shop">SHOP</flux:navbar.item>
         <flux:navbar.item href="/login">LOGIN</flux:navbar.item>
     </flux:navbar>
-    <div x-data="{ cart: JSON.parse(localStorage.getItem('cart-items') || '[]') }" x-init="window.addEventListener('cart-updated', e => cart = e.detail)">
+    <div x-data="{ cart: JSON.parse(localStorage.getItem('cart-items') || '[]') }" x-init="window.addEventListener('cart-updated', () => { cart = JSON.parse(localStorage.getItem('cart-items') || '[]') })">
         <div class="drawer drawer-end">
             <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
@@ -29,9 +29,11 @@ new class extends Component {};
                 <ul class="menu bg-base-200 min-h-full w-80 p-4 space-y-4">
                     <template x-for="(item, index) in cart" :key="index">
                         <li>
-                            <div class="flex flex-col justify-between items-center border-2 p-0">
-                                <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt=""
-                                    class="h-44 w-full">
+                            <div class="flex flex-col justify-between items-center border-2 w-full  p-0">
+                                <div class="w-full aspect-square overflow-hidden bg-white">
+                                    <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt="coffee.jpg"
+                                        class="w-full h-full">
+                                </div>
                                 <flux:button size="xs" icon="plus-circle">Addons</flux:button>
                                 <div class="p-2 w-full space-y-2">
                                     <flux:textarea rows="auto" x-model="item.note" />
