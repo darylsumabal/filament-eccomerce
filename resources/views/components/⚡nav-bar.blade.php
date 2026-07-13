@@ -24,19 +24,20 @@ new class extends Component {};
                         class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"></span>
                 </label>
             </div>
-            <div class="drawer-side">
+            <div class="drawer-side text-black!">
                 <label for="my-drawer-5" aria-label="close sidebar" class="drawer-overlay"></label>
                 <ul class="menu bg-base-200 min-h-full w-80 p-4 space-y-4">
                     <template x-for="(item, index) in cart" :key="index">
                         <li>
-                            <div class="flex flex-col justify-between items-center border-2 w-full  p-0">
-                                <div class="w-full aspect-square overflow-hidden bg-white">
+                            <div
+                                class="flex flex-col justify-between items-center border-2 border-[#e2bf7d] w-full  p-0 bg-[#E2D9C8]">
+                                <div class="w-full aspect-square overflow-hidden">
                                     <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt="coffee.jpg"
                                         class="w-full h-full">
                                 </div>
                                 <flux:button size="xs" icon="plus-circle">Addons</flux:button>
                                 <div class="p-2 w-full space-y-2">
-                                    <flux:textarea rows="auto" x-model="item.note" />
+                                    <flux:textarea label="Note" rows="auto" x-model="item.note" class="border-[#e2bf7d]! bg-white! text-black!" />
                                     <div class="flex flex-col justify-between">
                                         <div class="flex justify-between w-full">
                                             <span x-text="item.coffee?.name ?? 'Item'"></span>
