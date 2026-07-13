@@ -1,8 +1,17 @@
 <?php
 
+use App\Models\Addons;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-new class extends Component {};
+new class extends Component {
+    #[Computed]
+    public function availableAddons()
+    {
+        return Addons::all();
+    }
+};
+
 ?>
 
 <nav class="flex text-white items-center py-10 justify-between w-full">
@@ -37,49 +46,48 @@ new class extends Component {};
                                 </div>
 
                                 <flux:modal.trigger name="edit-profile">
-                                    <flux:button size="xs" icon="plus-circle">Addons</flux:button>
+                                    <flux:button  size="xs" icon="plus-circle" class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">Addons</flux:button>
                                 </flux:modal.trigger>
 
                                 <div class="p-2 w-full space-y-2">
-                                    <flux:textarea label="Note" rows="auto" x-model="item.note"
+                                    <label>Addons</label>
+                                    <template x-for="(addon,addonIndex) in item.addons" :key="addonIndex">
+                                        <div class="flex justify-between items-center gap-2">
+                                            <span x-text="addon.name ?? ''"></span>
+                                            <span x-text="'₱. ' + ( addon.price ?? '')"></span>
+                                        </div>
+                                    </template>
+                                    <label>Note</label>
+                                    <flux:textarea rows="auto" x-model="item.note"
                                         class="border-[#e2bf7d]! bg-white! text-black!" />
                                     <div class="flex flex-col justify-between">
+                                        <label>Coffee</label>
                                         <div class="flex justify-between w-full">
                                             <span x-text="item.coffee?.name ?? 'Item'"></span>
-                                            <span class="text-sm" x-text="'PHP. ' + (item.coffee?.price ?? '')"></span>
+                                            <span class="text-sm" x-text="'₱. ' + (item.coffee?.price ?? '')"></span>
                                         </div>
                                         <div class="flex justify-between items-center text-sm">
                                             <p>Total:</p>
                                             <p>300</p>
                                         </div>
                                     </div>
-                                    <flux:button icon="trash" />
+                                    <flux:button icon="trash" variant="danger" />
 
                                 </div>
 
                             </div>
                         </li>
                     </template>
-                    
+
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
 
                     <flux:modal name="edit-profile" class="md:w-96">
-                        <div class="space-y-6">
-                            <div>
-                                <flux:heading size="lg">Update profile</flux:heading>
-                                <flux:text class="mt-2">Make changes to your personal details.</flux:text>
-                            </div>
-
-                            <flux:input label="Name" placeholder="Your name" />
-
-                            <flux:input label="Date of birth" type="date" />
-
-                            <div class="flex">
-                                <flux:spacer />
-
-                                <flux:button type="submit" variant="primary">Save changes</flux:button>
-                            </div>
-                        </div>
+                        <flux:checkbox.group wire:model="addons" label="Addons">
+                            @foreach ($this->availableAddons as $addon)
+                                <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
+                                    value="{{ $addon->id }}" />
+                            @endforeach
+                        </flux:checkbox.group>
                     </flux:modal>
                 </ul>
             </div>

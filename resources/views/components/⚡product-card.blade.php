@@ -95,7 +95,7 @@ new class extends Component {
             </div>
 
             <div class="flex justify-between items-center  mt-4">
-                <flux:button wire:click="addToCart" class=" bg-green-700 text-white p-2 rounded-md w-fit">Add to
+                <flux:button wire:click="addToCart" class="bg-green-700 text-white p-2 rounded-md w-fit">Add to
                     cart</flux:button>
 
                 <div>
