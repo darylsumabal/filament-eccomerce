@@ -61,16 +61,18 @@ new class extends Component {
     <div class="carousel rounded-box w-6xl space-x-2 text-[#2A0000]">
         @foreach ($this->coffees as $coffee)
             <div class="carousel-item border-2 rounded-md h-142 w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
+                <div class="p-4 w-full flex flex-col justify-between">
                     <img src="{{ $coffee->image ? Storage::url($coffee->image) : asset('/coffee_alt.jpg') }}"
                         alt="coffee.jpg" class="h-90 rounded-md w-full" />
                     <p class="text-2xl font-black">{{ $coffee->name }}</p>
-                    <p class="font-medium line-clamp-2 break-all">{{ $coffee->description }}</p>
+                    <p class="font-medium line-clamp-1 break-all">{{ $coffee->description }}</p>
                     <div class="flex items-center justify-between">
                         <p class="font-bold">PHP. {{ $coffee->price }}</p>
                         <button class="bg-[#2A0000] text-white rounded-md px-4 py-2 text-sm"
                             popovertarget="{{ $coffee->id }}" wire:click="getCoffee({{ $coffee->id }})">Add to
                             cart</button>
+
+
 
                         <div x-data="{ cart: $persist([]).as('cart-items') }" x-on:add-to-cart.window="cart.push($event.detail.item)"
                             class="modal text-white!" id="{{ $coffee->id }}" popover>
@@ -78,7 +80,7 @@ new class extends Component {
                                 @if ($selectedCoffee)
                                     <h3 class="font-bold text-lg">Add {{ $selectedCoffee->name }} to cart?</h3>
                                     <img src="{{ $selectedCoffee->image ? Storage::url($selectedCoffee->image) : asset('/coffee_alt.jpg') }}"
-                                        alt="coffee.jpg" class="h-90! rounded-md" />
+                                        alt="coffee.jpg" class="h-90! rounded-md w-full" />
                                     <p class="py-2 text-sm">{{ $selectedCoffee->description }}</p>
                                     <p class="font-black mt-2 text-[#e2bf7d]">Price: PHP. {{ $selectedCoffee->price }}
                                     </p>
@@ -114,5 +116,7 @@ new class extends Component {
                 </div>
             </div>
         @endforeach
+
+
     </div>
 </div>

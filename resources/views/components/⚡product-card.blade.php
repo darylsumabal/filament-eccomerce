@@ -58,7 +58,7 @@ new class extends Component {
                     <img src="{{ $coffee->image ? Storage::url($coffee->image) : asset('/coffee_alt.jpg') }}"
                         alt="coffee.jpg" class="h-90 rounded-md w-full" />
                     <p class="text-2xl font-black">{{ $coffee->name }}</p>
-                    <p class="font-medium line-clamp-2 break-all">{{ $coffee->description }}</p>
+                    <p class="font-medium line-clamp-1 break-all">{{ $coffee->description }}</p>
                     <div class="flex items-center justify-between">
                         <p class="font-bold">PHP. {{ $coffee->price }}</p>
                         <button class="bg-[#2A0000] text-white rounded-md px-4 py-2 text-sm" popovertarget="coffee-modal"
