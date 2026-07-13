@@ -20,7 +20,7 @@
     </div>
 
     <livewire:carousel-coffee />
-    <livewire:carousel-coffee header="Our Special Dessert" />
+    {{-- <livewire:carousel-coffee header="Our Special Dessert" /> --}}
 
 
     <div class="flex justify-between items-center h-64 mt-10 bg-[#E2D9C8] ">

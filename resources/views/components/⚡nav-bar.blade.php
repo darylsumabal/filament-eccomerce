@@ -35,9 +35,14 @@ new class extends Component {};
                                     <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt="coffee.jpg"
                                         class="w-full h-full">
                                 </div>
-                                <flux:button size="xs" icon="plus-circle">Addons</flux:button>
+
+                                <flux:modal.trigger name="edit-profile">
+                                    <flux:button size="xs" icon="plus-circle">Addons</flux:button>
+                                </flux:modal.trigger>
+
                                 <div class="p-2 w-full space-y-2">
-                                    <flux:textarea label="Note" rows="auto" x-model="item.note" class="border-[#e2bf7d]! bg-white! text-black!" />
+                                    <flux:textarea label="Note" rows="auto" x-model="item.note"
+                                        class="border-[#e2bf7d]! bg-white! text-black!" />
                                     <div class="flex flex-col justify-between">
                                         <div class="flex justify-between w-full">
                                             <span x-text="item.coffee?.name ?? 'Item'"></span>
@@ -55,7 +60,27 @@ new class extends Component {};
                             </div>
                         </li>
                     </template>
+                    
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
+
+                    <flux:modal name="edit-profile" class="md:w-96">
+                        <div class="space-y-6">
+                            <div>
+                                <flux:heading size="lg">Update profile</flux:heading>
+                                <flux:text class="mt-2">Make changes to your personal details.</flux:text>
+                            </div>
+
+                            <flux:input label="Name" placeholder="Your name" />
+
+                            <flux:input label="Date of birth" type="date" />
+
+                            <div class="flex">
+                                <flux:spacer />
+
+                                <flux:button type="submit" variant="primary">Save changes</flux:button>
+                            </div>
+                        </div>
+                    </flux:modal>
                 </ul>
             </div>
         </div>
