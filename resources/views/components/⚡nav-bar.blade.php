@@ -48,7 +48,7 @@ new class extends Component {
                                         class="w-full h-full">
                                 </div>
 
-                                <flux:modal.trigger name="edit-profile">
+                                <flux:modal.trigger name="addon-modal">
                                     <flux:button size="xs" icon="plus-circle"
                                         class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">
                                         Addons</flux:button>
@@ -86,7 +86,7 @@ new class extends Component {
 
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
 
-                    <flux:modal name="edit-profile" class="md:w-96">
+                    <flux:modal name="addon-modal" class="bg-[#E2D9C8]!">
                         <div class="space-y-4">
                             <div>
                                 <flux:checkbox.group wire:model="addons" label="Addons">
