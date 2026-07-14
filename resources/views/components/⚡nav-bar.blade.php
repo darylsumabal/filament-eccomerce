@@ -33,7 +33,7 @@ new class extends Component {
                 <label for="my-drawer-5" class="drawer-button btn bg-white border-0 btn-circle relative">
                     <flux:icon.shopping-cart variant="solid" class="text-black drawer-button" />
                     <span x-show="cart.length > 0" x-text="cart.length"
-                        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"></span>
+                        class="absolute -top-1 -right-1 bg-[#2A0000] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"></span>
                 </label>
             </div>
             <div class="drawer-side text-black!">
