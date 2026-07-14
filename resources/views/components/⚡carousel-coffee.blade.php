@@ -72,8 +72,6 @@ new class extends Component {
                             popovertarget="{{ $coffee->id }}" wire:click="getCoffee({{ $coffee->id }})">Add to
                             cart</button>
 
-
-
                         <div x-data="{ cart: $persist([]).as('cart-items') }" x-on:add-to-cart.window="cart.push($event.detail.item)"
                             class="modal text-white!" id="{{ $coffee->id }}" popover>
                             <div class="modal-box w-96">

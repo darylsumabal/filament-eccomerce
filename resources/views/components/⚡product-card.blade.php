@@ -31,10 +31,7 @@ new class extends Component {
 
     public function addToCart()
     {
-        $addons = Addons::whereIn('id', $this->addons)
-            ->get()
-            ->map(fn ($addon) => $addon->only(['id', 'name', 'price']))
-            ->values();
+        $addons = Addons::whereIn('id', $this->addons)->get()->map(fn($addon) => $addon->only(['id', 'name', 'price']))->values();
 
         $shapedData = [
             'addons' => $addons,
@@ -61,8 +58,9 @@ new class extends Component {
                     <p class="font-medium line-clamp-1 break-all">{{ $coffee->description }}</p>
                     <div class="flex items-center justify-between">
                         <p class="font-bold">PHP. {{ $coffee->price }}</p>
-                        <button class="bg-[#2A0000] text-white rounded-md px-4 py-2 text-sm" popovertarget="coffee-modal"
-                            wire:click="getCoffee({{ $coffee->id }})">Add to cart</button>
+                        <button class="bg-[#2A0000] text-white rounded-md px-4 py-2 text-sm"
+                            popovertarget="coffee-modal" wire:click="getCoffee({{ $coffee->id }})">Add to
+                            cart</button>
                     </div>
                 </div>
             </div>
@@ -70,9 +68,8 @@ new class extends Component {
     </div>
 
     {{ $this->coffees->links() }}
-
-    <div x-data="{ cart: $persist([]).as('cart-items') }" x-on:add-to-cart.window="cart.push($event.detail.item); $nextTick(() => window.dispatchEvent(new CustomEvent('cart-updated')))" class="modal text-white!"
-        id="coffee-modal" popover>
+    <!-- Open the modal using ID.showModal() method -->
+    <div x-data="cart()" class="modal text-white!" id="coffee-modal"  popover>
         <div class="modal-box w-96">
             @if ($selectedCoffee)
                 <h3 class="font-bold text-lg">Add {{ $selectedCoffee->name }} to cart?</h3>
@@ -105,8 +102,34 @@ new class extends Component {
             </div>
         </div>
         <div class="modal-backdrop">
-                    <button popovertarget="coffee-modal" popovertargetaction="hide">close</button>
+            <button popovertarget="coffee-modal" popovertargetaction="hide">close</button>
         </div>
 
     </div>
 </div>
+
+@verbatim
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('cart', () => ({
+                cart: Alpine.$persist([]).as('cart-items'),
+
+                init() {
+                    // Listen to the window event safely
+                    window.addEventListener('add-to-cart', (event) => {
+                        const newItem = event.detail?.item;
+
+                        if (newItem) {
+                            this.cart.push(newItem);
+
+                            // Let the DOM update, then notify the navbar
+                            this.$nextTick(() => {
+                                window.dispatchEvent(new CustomEvent('cart-updated'));
+                            });
+                        }
+                    });
+                }
+            }))
+        })
+    </script>
+@endverbatim

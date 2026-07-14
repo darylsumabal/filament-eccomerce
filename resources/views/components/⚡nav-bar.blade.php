@@ -5,6 +5,9 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
+
+    public array $addons = [];
+
     #[Computed]
     public function availableAddons()
     {
@@ -23,7 +26,8 @@ new class extends Component {
         <flux:navbar.item href="/shop">SHOP</flux:navbar.item>
         <flux:navbar.item href="/login">LOGIN</flux:navbar.item>
     </flux:navbar>
-    <div x-data="{ cart: JSON.parse(localStorage.getItem('cart-items') || '[]') }" x-init="window.addEventListener('cart-updated', () => { cart = JSON.parse(localStorage.getItem('cart-items') || '[]') })">
+
+    <div x-data="cartItem()">
         <div class="drawer drawer-end">
             <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
@@ -46,7 +50,9 @@ new class extends Component {
                                 </div>
 
                                 <flux:modal.trigger name="edit-profile">
-                                    <flux:button  size="xs" icon="plus-circle" class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">Addons</flux:button>
+                                    <flux:button size="xs" icon="plus-circle"
+                                        class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">
+                                        Addons</flux:button>
                                 </flux:modal.trigger>
 
                                 <div class="p-2 w-full space-y-2">
@@ -54,7 +60,7 @@ new class extends Component {
                                     <template x-for="(addon,addonIndex) in item.addons" :key="addonIndex">
                                         <div class="flex justify-between items-center gap-2">
                                             <span x-text="addon.name ?? ''"></span>
-                                            <span x-text="'₱. ' + ( addon.price ?? '')"></span>
+                                            <span x-text="'₱ ' + ( addon.price ?? '')"></span>
                                         </div>
                                     </template>
                                     <label>Note</label>
@@ -64,14 +70,14 @@ new class extends Component {
                                         <label>Coffee</label>
                                         <div class="flex justify-between w-full">
                                             <span x-text="item.coffee?.name ?? 'Item'"></span>
-                                            <span class="text-sm" x-text="'₱. ' + (item.coffee?.price ?? '')"></span>
+                                            <span class="text-sm" x-text="'₱ ' + (item.coffee?.price ?? '')"></span>
                                         </div>
                                         <div class="flex justify-between items-center text-sm">
                                             <p>Total:</p>
                                             <p>300</p>
                                         </div>
                                     </div>
-                                    <flux:button icon="trash" variant="danger" />
+                                    <flux:button x-on:click="removeItem(index)" icon="trash" variant="danger" />
 
                                 </div>
 
@@ -84,8 +90,8 @@ new class extends Component {
                     <flux:modal name="edit-profile" class="md:w-96">
                         <flux:checkbox.group wire:model="addons" label="Addons">
                             @foreach ($this->availableAddons as $addon)
-                                <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
-                                    value="{{ $addon->id }}" />
+                            <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
+                                value="{{ $addon->id }}" />
                             @endforeach
                         </flux:checkbox.group>
                     </flux:modal>
@@ -94,3 +100,27 @@ new class extends Component {
         </div>
     </div>
 </nav>
+
+@verbatim
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('cartItem', () => ({
+            cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
+            init() {
+                window.addEventListener('cart-updated', () => {
+                    this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                })
+            },
+            removeItem(index) {
+                const data = localStorage.getItem('cart-items')
+                if (data) {
+                    const array = JSON.parse(data)
+                    array.splice(index, 1)
+                    localStorage.setItem('cart-items', JSON.stringify(array))
+                    this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                }
+            }
+        }))
+    })
+</script>
+@endverbatim
