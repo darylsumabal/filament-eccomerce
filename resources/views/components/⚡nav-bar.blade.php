@@ -81,9 +81,8 @@ new class extends Component {
 
                                         <div class="flex items-center gap-1">
                                             <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
-                                            <p class="text-lg font-medium">2</p>
+                                            <p class="text-lg font-medium" x-text="item.quantity"></p>
                                             <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
-
                                         </div>
                                     </div>
                                 </div>
@@ -111,9 +110,6 @@ new class extends Component {
                                     Add</flux:button>
                             </div>
                         </div>
-
-
-
                     </flux:modal>
                 </ul>
             </div>
@@ -129,10 +125,11 @@ new class extends Component {
                 itemTotal(item) {
                     if (!item) return 0;
                     const coffeePrice = Number(item.coffee?.price || 0);
+                    const quantity = Number(item.quantity || 1);
                     const addonsPrice = (item.addons || []).reduce((addonSum, addon) => {
                         return addonSum + Number(addon.price || 0);
                     }, 0);
-                    return coffeePrice + addonsPrice;
+                    return Number((quantity * coffeePrice) + addonsPrice).toFixed(2);
                 },
                 init() {
                     window.addEventListener('cart-updated', () => {
