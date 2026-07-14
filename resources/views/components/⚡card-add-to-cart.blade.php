@@ -70,8 +70,9 @@ new class extends Component {
             <flux:button wire:click="addToCart" class="bg-[#2A0000]! text-white! p-2 rounded-md w-fit">Add to
                 cart</flux:button>
 
-            <div>
+            <div class="flex items-center gap-1">
                 <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
+                <p class="text-lg font-medium">3</p>
                 <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
             </div>
         </div>
