@@ -5,6 +5,8 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
+    public array $addons = [];
+
     #[Computed]
     public function availableAddons()
     {
@@ -14,16 +16,17 @@ new class extends Component {
 
 ?>
 
-<nav class="flex text-white items-center py-10 justify-between w-full">
+<div class="flex text-white! items-center py-10 justify-between w-full">
     <h1 class="font-bold text-xl font-serif">Coffea</h1>
     <flux:navbar>
-        <flux:navbar.item href="/">HOME</flux:navbar.item>
-        <flux:navbar.item href="/coffee">COFFEE</flux:navbar.item>
-        <flux:navbar.item href="/bakery">BAKERY</flux:navbar.item>
-        <flux:navbar.item href="/shop">SHOP</flux:navbar.item>
-        <flux:navbar.item href="/login">LOGIN</flux:navbar.item>
+        <flux:navbar.item class="text-white!" href="/">HOME</flux:navbar.item>
+        <flux:navbar.item class="text-white!" href="/coffee">COFFEE</flux:navbar.item>
+        <flux:navbar.item class="text-white!" href="/bakery">BAKERY</flux:navbar.item>
+        <flux:navbar.item class="text-white!" href="/shop">ABOUT</flux:navbar.item>
+        <flux:navbar.item class="text-white!"href="/testimonial">TESTIMONIAL</flux:navbar.item>
     </flux:navbar>
-    <div x-data="{ cart: JSON.parse(localStorage.getItem('cart-items') || '[]') }" x-init="window.addEventListener('cart-updated', () => { cart = JSON.parse(localStorage.getItem('cart-items') || '[]') })">
+
+    <div x-data="cartItem()">
         <div class="drawer drawer-end">
             <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
@@ -45,8 +48,10 @@ new class extends Component {
                                         class="w-full h-full">
                                 </div>
 
-                                <flux:modal.trigger name="edit-profile">
-                                    <flux:button  size="xs" icon="plus-circle" class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">Addons</flux:button>
+                                <flux:modal.trigger name="addon-modal">
+                                    <flux:button size="xs" icon="plus-circle"
+                                        class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">
+                                        Addons</flux:button>
                                 </flux:modal.trigger>
 
                                 <div class="p-2 w-full space-y-2">
@@ -54,7 +59,7 @@ new class extends Component {
                                     <template x-for="(addon,addonIndex) in item.addons" :key="addonIndex">
                                         <div class="flex justify-between items-center gap-2">
                                             <span x-text="addon.name ?? ''"></span>
-                                            <span x-text="'₱. ' + ( addon.price ?? '')"></span>
+                                            <span x-text="'₱ ' + ( addon.price ?? '')"></span>
                                         </div>
                                     </template>
                                     <label>Note</label>
@@ -64,15 +69,23 @@ new class extends Component {
                                         <label>Coffee</label>
                                         <div class="flex justify-between w-full">
                                             <span x-text="item.coffee?.name ?? 'Item'"></span>
-                                            <span class="text-sm" x-text="'₱. ' + (item.coffee?.price ?? '')"></span>
+                                            <span class="text-sm" x-text="'₱ ' + (item.coffee?.price ?? '')"></span>
                                         </div>
                                         <div class="flex justify-between items-center text-sm">
                                             <p>Total:</p>
-                                            <p>300</p>
+                                            <span x-text="'₱ ' + itemTotal(item)"></span>
                                         </div>
                                     </div>
-                                    <flux:button icon="trash" variant="danger" />
+                                    <div class="flex items-center justify-between">
+                                        <flux:button x-on:click="removeItem(index)" icon="trash" variant="danger" />
 
+                                        <div class="flex items-center gap-1">
+                                            <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
+                                            <p class="text-lg font-medium">2</p>
+                                            <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
+
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -81,16 +94,61 @@ new class extends Component {
 
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
 
-                    <flux:modal name="edit-profile" class="md:w-96">
-                        <flux:checkbox.group wire:model="addons" label="Addons">
-                            @foreach ($this->availableAddons as $addon)
-                                <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
-                                    value="{{ $addon->id }}" />
-                            @endforeach
-                        </flux:checkbox.group>
+                    <flux:modal name="addon-modal" class="bg-[#E2D9C8]!">
+                        <div class="space-y-4">
+                            <div>
+                                <flux:checkbox.group wire:model="addons" label="Addons">
+                                    @foreach ($this->availableAddons as $addon)
+                                        <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
+                                            value="{{ $addon->id }}" />
+                                    @endforeach
+                                </flux:checkbox.group>
+                            </div>
+
+                            <div>
+                                <flux:button size="xs" icon="plus-circle"
+                                    class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">
+                                    Add</flux:button>
+                            </div>
+                        </div>
+
+
+
                     </flux:modal>
                 </ul>
             </div>
         </div>
     </div>
-</nav>
+</div>
+
+@verbatim
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('cartItem', () => ({
+                cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
+                itemTotal(item) {
+                    if (!item) return 0;
+                    const coffeePrice = Number(item.coffee?.price || 0);
+                    const addonsPrice = (item.addons || []).reduce((addonSum, addon) => {
+                        return addonSum + Number(addon.price || 0);
+                    }, 0);
+                    return coffeePrice + addonsPrice;
+                },
+                init() {
+                    window.addEventListener('cart-updated', () => {
+                        this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    })
+                },
+                removeItem(index) {
+                    const data = localStorage.getItem('cart-items')
+                    if (data) {
+                        const array = JSON.parse(data)
+                        array.splice(index, 1)
+                        localStorage.setItem('cart-items', JSON.stringify(array))
+                        this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    }
+                }
+            }))
+        })
+    </script>
+@endverbatim
