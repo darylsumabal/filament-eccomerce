@@ -5,7 +5,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
-    public string $header = 'our special coffee';
+    public string $header = 'Our Special Coffee';
     public ?Product $selectedCoffee = null;
     public array $coffeeIds = [];
 

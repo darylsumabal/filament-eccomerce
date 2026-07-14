@@ -30,7 +30,7 @@
         <div class="space-y-6">
             <p class="text-3xl font-semibold font-serif">Check Out Our Best <br /> Coffee Beans</p>
             <flux:button href="/coffee" icon:trailing="chevron-double-right"
-                class="rounded-full! bg-[#2A0000]! text-xs!">
+                class="rounded-full! text-white! bg-[#2A0000]! text-xs!">
                 Explore Out Products
             </flux:button>
         </div>
