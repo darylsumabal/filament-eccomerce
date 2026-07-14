@@ -5,7 +5,6 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
-
     public array $addons = [];
 
     #[Computed]
@@ -88,12 +87,25 @@ new class extends Component {
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
 
                     <flux:modal name="edit-profile" class="md:w-96">
-                        <flux:checkbox.group wire:model="addons" label="Addons">
-                            @foreach ($this->availableAddons as $addon)
-                            <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
-                                value="{{ $addon->id }}" />
-                            @endforeach
-                        </flux:checkbox.group>
+                        <div class="space-y-4">
+                            <div>
+                                <flux:checkbox.group wire:model="addons" label="Addons">
+                                    @foreach ($this->availableAddons as $addon)
+                                        <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
+                                            value="{{ $addon->id }}" />
+                                    @endforeach
+                                </flux:checkbox.group>
+                            </div>
+
+                            <div>
+                                <flux:button size="xs" icon="plus-circle"
+                                    class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">
+                                    Add</flux:button>
+                            </div>
+                        </div>
+
+
+
                     </flux:modal>
                 </ul>
             </div>
@@ -102,25 +114,25 @@ new class extends Component {
 </nav>
 
 @verbatim
-<script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('cartItem', () => ({
-            cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
-            init() {
-                window.addEventListener('cart-updated', () => {
-                    this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
-                })
-            },
-            removeItem(index) {
-                const data = localStorage.getItem('cart-items')
-                if (data) {
-                    const array = JSON.parse(data)
-                    array.splice(index, 1)
-                    localStorage.setItem('cart-items', JSON.stringify(array))
-                    this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('cartItem', () => ({
+                cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
+                init() {
+                    window.addEventListener('cart-updated', () => {
+                        this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    })
+                },
+                removeItem(index) {
+                    const data = localStorage.getItem('cart-items')
+                    if (data) {
+                        const array = JSON.parse(data)
+                        array.splice(index, 1)
+                        localStorage.setItem('cart-items', JSON.stringify(array))
+                        this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    }
                 }
-            }
-        }))
-    })
-</script>
+            }))
+        })
+    </script>
 @endverbatim
