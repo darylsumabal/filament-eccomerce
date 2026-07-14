@@ -27,6 +27,8 @@
         </div>
     </div>
     {{ $slot }}
+
+    <flux:toast position="top center"/>
     @livewireScripts()
     @fluxScripts
 </body>

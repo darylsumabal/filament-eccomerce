@@ -2,6 +2,7 @@
 
 use App\Models\Addons;
 use App\Models\Product;
+use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
@@ -11,6 +12,19 @@ new class extends Component {
     public ?Product $selectedCoffee = null;
     public array $addons = [];
     public string $note = '';
+    public int $quantity = 1;
+
+    public function increment()
+    {
+        $this->quantity++;
+    }
+
+    public function decrement()
+    {
+        if ($this->quantity > 1) {
+            $this->quantity--;
+        }
+    }
 
     public function addToCart()
     {
@@ -20,11 +34,14 @@ new class extends Component {
             'addons' => $addons,
             'coffee' => $this->selectedCoffee->only(['id', 'name', 'description', 'price', 'image']),
             'note' => $this->note,
+            'quantity' => $this->quantity,
         ];
 
         $this->dispatch('add-to-cart', item: $shapedData);
 
         $this->reset(['addons', 'note']);
+
+        Flux::toast(duration: 1000, text: 'Coffee added to cart.', variant: 'success');
     }
 
     public function getCoffee($id)
@@ -41,14 +58,11 @@ new class extends Component {
 ?>
 
 <div x-data="cart()" class="modal  text-black!" id="coffee-modal" popover>
-    @php
-        logger($this->selectedCoffee);
-    @endphp
-    <div class="modal-box w-96 bg-[#E2D9C8]! border-[#e2bf7d]!">
+    <div class="modal-box w-96 bg-[#E2D9C8]! border-2 border-[#e2bf7d]!">
         @if ($selectedCoffee)
             <h3 class="font-bold text-lg">Add {{ $selectedCoffee->name }} to cart?</h3>
             <img src="{{ $selectedCoffee->image ? Storage::url($selectedCoffee->image) : asset('/coffee_alt.jpg') }}"
-                alt="coffee.jpg" class="h-90! w-full rounded-md" />
+                alt="coffee.jpg" class="h-90! w-full rounded-md border-2 border-[#e2bf7d]!" />
             <p class="py-2 text-sm line-clamp-2">{{ $selectedCoffee->description }}</p>
             <p class="font-black mt-2 text-black!">Price: ₱ {{ $selectedCoffee->price }}</p>
             <label class="text-black!">Order notes</label>
@@ -71,9 +85,9 @@ new class extends Component {
                 cart</flux:button>
 
             <div class="flex items-center gap-1">
-                <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
-                <p class="text-lg font-medium">3</p>
-                <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
+                <flux:button wire:click="decrement" icon="minus-circle" class="bg-[#2A0000]! text-white!" />
+                <p class="text-lg font-medium" wire:text="quantity">{{ $quantity }}</p>
+                <flux:button wire:click="increment" icon="plus-circle" class="bg-[#2A0000]! text-white!" />
             </div>
         </div>
     </div>
