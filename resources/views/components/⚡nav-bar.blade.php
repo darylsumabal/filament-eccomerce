@@ -73,11 +73,19 @@ new class extends Component {
                                         </div>
                                         <div class="flex justify-between items-center text-sm">
                                             <p>Total:</p>
-                                            <p>300</p>
+                                            <span x-text="'₱ ' + itemTotal(item)"></span>
                                         </div>
                                     </div>
-                                    <flux:button x-on:click="removeItem(index)" icon="trash" variant="danger" />
+                                    <div class="flex items-center justify-between">
+                                        <flux:button x-on:click="removeItem(index)" icon="trash" variant="danger" />
 
+                                        <div class="flex items-center gap-1">
+                                            <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
+                                            <p class="text-lg font-medium">2</p>
+                                            <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
+
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -118,6 +126,14 @@ new class extends Component {
         document.addEventListener('alpine:init', () => {
             Alpine.data('cartItem', () => ({
                 cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
+                itemTotal(item) {
+                    if (!item) return 0;
+                    const coffeePrice = Number(item.coffee?.price || 0);
+                    const addonsPrice = (item.addons || []).reduce((addonSum, addon) => {
+                        return addonSum + Number(addon.price || 0);
+                    }, 0);
+                    return coffeePrice + addonsPrice;
+                },
                 init() {
                     window.addEventListener('cart-updated', () => {
                         this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')

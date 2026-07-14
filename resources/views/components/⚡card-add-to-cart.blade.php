@@ -71,8 +71,8 @@ new class extends Component {
                 cart</flux:button>
 
             <div>
-                <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!"></flux:button>
-                <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!"></flux:button>
+                <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
+                <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
             </div>
         </div>
     </div>
