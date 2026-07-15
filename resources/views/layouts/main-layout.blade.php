@@ -21,14 +21,15 @@
                     eiusmod
                     tempor
                 </p>
-                <button class="w-32 h-12 font-medium bg-white text-black rounded-full p-2 text-sm">Order Now
-                </button>
+                <flux:button href="/coffee"
+                    class="w-32! h-12! font-medium! bg-white! text-black! rounded-full! p-2! text-sm!">Order Now
+                </flux:button>
             </div>
         </div>
     </div>
     {{ $slot }}
 
-    <flux:toast position="top center"/>
+    <flux:toast position="top center" />
     @livewireScripts()
     @fluxScripts
 </body>

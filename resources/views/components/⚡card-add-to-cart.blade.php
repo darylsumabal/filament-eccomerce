@@ -40,7 +40,7 @@ new class extends Component {
         $this->dispatch('add-to-cart', item: $shapedData);
 
         $this->reset(['addons', 'note']);
-
+        $this->quantity = 1;
         Flux::toast(duration: 1000, text: 'Coffee added to cart.', variant: 'success');
     }
 
@@ -60,21 +60,21 @@ new class extends Component {
 <div x-data="cart()" class="modal  text-black!" id="coffee-modal" popover>
     <div class="modal-box w-96 bg-[#E2D9C8]! border-2 border-[#e2bf7d]!">
         @if ($selectedCoffee)
-            <h3 class="font-bold text-lg">Add {{ $selectedCoffee->name }} to cart?</h3>
-            <img src="{{ $selectedCoffee->image ? Storage::url($selectedCoffee->image) : asset('/coffee_alt.jpg') }}"
-                alt="coffee.jpg" class="h-90! w-full rounded-md border-2 border-[#e2bf7d]!" />
-            <p class="py-2 text-sm line-clamp-2">{{ $selectedCoffee->description }}</p>
-            <p class="font-black mt-2 text-black!">Price: ₱ {{ $selectedCoffee->price }}</p>
-            <label class="text-black!">Order notes</label>
-            <flux:textarea class="text-black!" rows="auto" wire:model="note" placeholder="Enter note..." />
+        <h3 class="font-bold text-lg">Add {{ $selectedCoffee->name }} to cart?</h3>
+        <img src="{{ $selectedCoffee->image ? Storage::url($selectedCoffee->image) : asset('/coffee_alt.jpg') }}"
+            alt="coffee.jpg" class="h-90! w-full rounded-md border-2 border-[#e2bf7d]!" />
+        <p class="py-2 text-sm line-clamp-2">{{ $selectedCoffee->description }}</p>
+        <p class="font-black mt-2 text-black!">Price: ₱ {{ $selectedCoffee->price }}</p>
+        <label class="text-black!">Order notes</label>
+        <flux:textarea class="text-black!" rows="auto" wire:model="note" placeholder="Enter note..." />
         @else
-            <p class="py-4">Loading coffee details...</p>
+        <p class="py-4">Loading coffee details...</p>
         @endif
         <div class="mt-4">
             <flux:checkbox.group wire:model="addons" label="Addons" class="h-20 overflow-y-scroll ">
                 @foreach ($this->availableAddons as $addon)
-                    <flux:checkbox class="text-black!" wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
-                        value="{{ $addon->id }}" />
+                <flux:checkbox class="text-black!" wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
+                    value="{{ $addon->id }}" />
                 @endforeach
             </flux:checkbox.group>
 
@@ -99,27 +99,27 @@ new class extends Component {
 
 
 @verbatim
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('cart', () => ({
-                cart: Alpine.$persist([]).as('cart-items'),
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('cart', () => ({
+            cart: Alpine.$persist([]).as('cart-items'),
 
-                init() {
-                    // Listen to the window event safely
-                    window.addEventListener('add-to-cart', (event) => {
-                        const newItem = event.detail?.item;
+            init() {
+                // Listen to the window event safely
+                window.addEventListener('add-to-cart', (event) => {
+                    const newItem = event.detail?.item;
 
-                        if (newItem) {
-                            this.cart.push(newItem);
+                    if (newItem) {
+                        this.cart.push(newItem);
 
-                            // Let the DOM update, then notify the navbar
-                            this.$nextTick(() => {
-                                window.dispatchEvent(new CustomEvent('cart-updated'));
-                            });
-                        }
-                    });
-                }
-            }))
-        })
-    </script>
+                        // Let the DOM update, then notify the navbar
+                        this.$nextTick(() => {
+                            window.dispatchEvent(new CustomEvent('cart-updated'));
+                        });
+                    }
+                });
+            }
+        }))
+    })
+</script>
 @endverbatim

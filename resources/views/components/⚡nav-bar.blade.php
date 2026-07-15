@@ -80,9 +80,11 @@ new class extends Component {
                                         <flux:button x-on:click="removeItem(index)" icon="trash" variant="danger" />
 
                                         <div class="flex items-center gap-1">
-                                            <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
+                                            <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!"
+                                                x-on:click="decrementQuantity(index)" />
                                             <p class="text-lg font-medium" x-text="item.quantity"></p>
-                                            <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
+                                            <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!"
+                                                x-on:click="incrementQuantity(index)" />
                                         </div>
                                     </div>
                                 </div>
@@ -143,6 +145,16 @@ new class extends Component {
                         array.splice(index, 1)
                         localStorage.setItem('cart-items', JSON.stringify(array))
                         this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    }
+                },
+                incrementQuantity(index) {
+                    this.cart[index].quantity = Number(this.cart[index].quantity || 1) + 1
+                    localStorage.setItem('cart-items', JSON.stringify(this.cart))
+                },
+                decrementQuantity(index) {
+                    if (this.cart[index].quantity > 1) {
+                        this.cart[index].quantity = Number(this.cart[index].quantity) - 1
+                        localStorage.setItem('cart-items', JSON.stringify(this.cart))
                     }
                 }
             }))
