@@ -107,7 +107,7 @@ new class extends Component {
                             <input type="checkbox" :value="addon.id" x-model.number="selectedAddonIds"
                                 class="checkbox checkbox-sm border-[#e2bf7d]" />
                             <span x-text="addon.name"></span>
-                            <span class="text-sm text-gray-500 ml-auto" x-text="'₱ ' + addon.price"></span>
+                            <span class="text-sm ml-auto" x-text="'₱ ' + addon.price"></span>
                         </label>
                     </template>
                 </div>
