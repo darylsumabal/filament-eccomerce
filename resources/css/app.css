@@ -77,7 +77,7 @@ select:focus[data-flux-control] {
 */
 
 /** daisyUI */
-@plugin "daisyui" {
+/* @plugin "daisyui" {
     themes:
         light --default,
-}
+} */

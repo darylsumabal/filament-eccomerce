@@ -26,7 +26,7 @@ new class extends Component {
         <flux:navbar.item class="text-white!"href="/testimonial">TESTIMONIAL</flux:navbar.item>
     </flux:navbar>
 
-    <div x-data="cartItem()">
+    <div x-data="cartItem()" x-init="$nextTick(() => availableAddons = JSON.parse($el.dataset.addons))" data-addons="{{ $this->availableAddons->toJson() }}">
         <div class="drawer drawer-end">
             <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
@@ -48,11 +48,11 @@ new class extends Component {
                                         class="w-full h-full">
                                 </div>
 
-                                <flux:modal.trigger name="addon-modal">
-                                    <flux:button size="xs" icon="plus-circle"
-                                        class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">
-                                        Addons</flux:button>
-                                </flux:modal.trigger>
+                                <flux:button size="xs" icon="plus-circle"
+                                    class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!"
+                                    x-on:click="openAddonModal(index)">
+                                    Addons
+                                </flux:button>
 
                                 <div class="p-2 w-full space-y-2">
                                     <label>Addons</label>
@@ -80,9 +80,11 @@ new class extends Component {
                                         <flux:button x-on:click="removeItem(index)" icon="trash" variant="danger" />
 
                                         <div class="flex items-center gap-1">
-                                            <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!" />
+                                            <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!"
+                                                x-on:click="decrementQuantity(index)" />
                                             <p class="text-lg font-medium" x-text="item.quantity"></p>
-                                            <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!" />
+                                            <flux:button icon="plus-circle" class="bg-[#2A0000]! text-white!"
+                                                x-on:click="incrementQuantity(index)" />
                                         </div>
                                     </div>
                                 </div>
@@ -92,28 +94,39 @@ new class extends Component {
                     </template>
 
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
-
-                    <flux:modal name="addon-modal" class="bg-[#E2D9C8]!">
-                        <div class="space-y-4">
-                            <div>
-                                <flux:checkbox.group wire:model="addons" label="Addons">
-                                    @foreach ($this->availableAddons as $addon)
-                                        <flux:checkbox wire:key="addon-{{ $addon->id }}" label="{{ $addon->name }}"
-                                            value="{{ $addon->id }}" />
-                                    @endforeach
-                                </flux:checkbox.group>
-                            </div>
-
-                            <div>
-                                <flux:button size="xs" icon="plus-circle"
-                                    class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!">
-                                    Add</flux:button>
-                            </div>
-                        </div>
-                    </flux:modal>
                 </ul>
             </div>
         </div>
+
+        <dialog x-ref="addonDialog" class="modal text-black!">
+            <div class="modal-box bg-[#E2D9C8]! border-2 border-[#e2bf7d]!">
+                <h3 class="font-bold text-lg mb-4">Select Addons</h3>
+                <div class="space-y-2">
+                    <template x-for="addon in availableAddons" :key="addon.id">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" :value="addon.id" x-model.number="selectedAddonIds"
+                                class="checkbox checkbox-sm border-[#e2bf7d]" />
+                            <span x-text="addon.name"></span>
+                            <span class="text-sm text-gray-500 ml-auto" x-text="'₱ ' + addon.price"></span>
+                        </label>
+                    </template>
+                </div>
+                <div class="modal-action">
+                    <flux:button size="xs" icon="plus-circle"
+                        class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!"
+                        x-on:click="applyAddons()">
+                        Add
+                    </flux:button>
+                    <flux:button size="xs" variant="danger" class="rounded-md! px-4! py-2! text-sm!"
+                        x-on:click="$refs.addonDialog.close()">
+                        Cancel
+                    </flux:button>
+                </div>
+            </div>
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
     </div>
 </div>
 
@@ -122,6 +135,24 @@ new class extends Component {
         document.addEventListener('alpine:init', () => {
             Alpine.data('cartItem', () => ({
                 cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
+                availableAddons: [],
+                editingAddonIndex: null,
+                selectedAddonIds: [],
+                openAddonModal(index) {
+                    this.editingAddonIndex = index
+                    this.selectedAddonIds = (this.cart[index].addons || []).map(a => a.id)
+                    this.$refs.addonDialog.showModal()
+                },
+                applyAddons() {
+                    if (this.editingAddonIndex === null) return
+                    const selected = this.availableAddons.filter(a => this.selectedAddonIds.includes(a
+                        .id))
+                    this.cart[this.editingAddonIndex].addons = selected
+                    localStorage.setItem('cart-items', JSON.stringify(this.cart))
+                    this.editingAddonIndex = null
+                    this.selectedAddonIds = []
+                    this.$refs.addonDialog.close()
+                },
                 itemTotal(item) {
                     if (!item) return 0;
                     const coffeePrice = Number(item.coffee?.price || 0);
@@ -143,6 +174,16 @@ new class extends Component {
                         array.splice(index, 1)
                         localStorage.setItem('cart-items', JSON.stringify(array))
                         this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    }
+                },
+                incrementQuantity(index) {
+                    this.cart[index].quantity = Number(this.cart[index].quantity || 1) + 1
+                    localStorage.setItem('cart-items', JSON.stringify(this.cart))
+                },
+                decrementQuantity(index) {
+                    if (this.cart[index].quantity > 1) {
+                        this.cart[index].quantity = Number(this.cart[index].quantity) - 1
+                        localStorage.setItem('cart-items', JSON.stringify(this.cart))
                     }
                 }
             }))
