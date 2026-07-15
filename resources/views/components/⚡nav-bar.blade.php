@@ -17,11 +17,14 @@ new class extends Component {
 ?>
 
 <div class="flex text-white! items-center py-10 justify-between w-full">
-    <h1 class="font-bold text-xl font-serif">Coffea</h1>
+    <h1 class="font-bold text-xl font-serif">
+        <a class="link link-hover" href="/">Coffea</a>
+    </h1>
+
     <flux:navbar>
         <flux:navbar.item class="text-white!" href="/">HOME</flux:navbar.item>
         <flux:navbar.item class="text-white!" href="/coffee">COFFEE</flux:navbar.item>
-        <flux:navbar.item class="text-white!" href="/bakery">BAKERY</flux:navbar.item>
+        <flux:navbar.item class="text-white!" href="/dessert">DESSERT</flux:navbar.item>
         <flux:navbar.item class="text-white!" href="/shop">ABOUT</flux:navbar.item>
         <flux:navbar.item class="text-white!"href="/testimonial">TESTIMONIAL</flux:navbar.item>
     </flux:navbar>
@@ -62,9 +65,10 @@ new class extends Component {
                                             <span x-text="'₱ ' + ( addon.price ?? '')"></span>
                                         </div>
                                     </template>
-                                    <label>Note</label>
-                                    <flux:textarea rows="auto" x-model="item.note"
-                                        class="border-[#e2bf7d]! bg-white! text-black!" />
+                                    <label class="text-black!">Note:</label>
+                                    <fieldset class="fieldset">
+                                        <textarea class="textarea h-24 border-[#e2bf7d]" x-model="item.note" placeholder="Enter note..."></textarea>
+                                    </fieldset>
                                     <div class="flex flex-col justify-between">
                                         <label>Coffee</label>
                                         <div class="flex justify-between w-full">
