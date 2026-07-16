@@ -9,7 +9,8 @@ use Livewire\Component;
 
 new class extends Component {
     #[Reactive]
-    public ?Product $selectedCoffee = null;
+    public ?Product $selectedProduct = null;
+    public string $modalId = 'coffee-modal';
     public array $addons = [];
     public string $note = '';
     public int $quantity = 1;
@@ -32,7 +33,7 @@ new class extends Component {
 
         $shapedData = [
             'addons' => $addons,
-            'coffee' => $this->selectedCoffee->only(['id', 'name', 'description', 'price', 'image']),
+            'coffee' => $this->selectedProduct->only(['id', 'name', 'description', 'price', 'image']),
             'note' => $this->note,
             'quantity' => $this->quantity,
         ];
@@ -46,7 +47,7 @@ new class extends Component {
 
     public function getCoffee($id)
     {
-        $this->selectedCoffee = Product::find($id);
+        $this->selectedProduct = Product::find($id);
     }
 
     #[Computed]
@@ -57,20 +58,22 @@ new class extends Component {
 };
 ?>
 
-<div x-data="cart()" class="modal  text-black!" id="coffee-modal" popover>
+<div x-data="cart()" class="modal  text-black!" id="{{ $modalId }}" popover
+    x-on:open-coffee-modal.window="$nextTick(() => $el.showPopover())">
     <div class="modal-box w-96 bg-[#E2D9C8]! border-2 border-[#e2bf7d]!">
-        @if ($selectedCoffee)
-            <h3 class="font-bold text-lg">Add {{ $selectedCoffee->name }} to cart?</h3>
-            <img src="{{ $selectedCoffee->image ? Storage::url($selectedCoffee->image) : asset('/coffee_alt.jpg') }}"
+        <button @click="$el.closest('[popover]').hidePopover()" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        @if ($selectedProduct)
+            <h3 class="font-bold text-lg">Add {{ $selectedProduct->name }} to cart?</h3>
+            <img src="{{ $selectedProduct->image ? Storage::url($selectedProduct->image) : asset('/coffee_alt.jpg') }}"
                 alt="coffee.jpg" class="h-90! w-full rounded-md border-2 border-[#e2bf7d]!" />
-            <p class="py-2 text-sm line-clamp-2">{{ $selectedCoffee->description }}</p>
-            <p class="font-black mt-2 text-black!">Price: ₱ {{ $selectedCoffee->price }}</p>
+            <p class="py-2 text-sm line-clamp-2">{{ $selectedProduct->description }}</p>
+            <p class="font-black mt-2 text-black!">Price: ₱ {{ $selectedProduct->price }}</p>
             <label class="text-black!">Order notes:</label>
             <fieldset class="fieldset">
                 <textarea class="textarea h-24 border-[#e2bf7d]" wire:model="note" placeholder="Enter note..."></textarea>
             </fieldset>
         @else
-            <p class="py-4">Loading coffee details...</p>
+            <p class="py-4">Loading product details...</p>
         @endif
         <div class="mt-4 ">
             <div class="h-24 overflow-y-scroll ">
@@ -97,8 +100,8 @@ new class extends Component {
             </div>
         </div>
     </div>
-    <div class="modal-backdrop">
-        <button popovertarget="coffee-modal" popovertargetaction="hide">close</button>
+    <div class="modal-backdrop" @click="$el.closest('[popover]').hidePopover()">
+        <button popovertarget="{{ $modalId }}" popovertargetaction="hide">close</button>
     </div>
 
 </div>

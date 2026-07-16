@@ -1,5 +1,5 @@
 <x-layouts::main-layout>
-    <livewire:coffee />
+    <livewire:desserts />
 
     <x-footer />
 </x-layouts::main-layout>
