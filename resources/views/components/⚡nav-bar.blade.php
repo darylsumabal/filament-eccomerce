@@ -25,7 +25,7 @@ new class extends Component {
         <flux:navbar.item class="text-white!" href="/">HOME</flux:navbar.item>
         <flux:navbar.item class="text-white!" href="/coffee">COFFEE</flux:navbar.item>
         <flux:navbar.item class="text-white!" href="/dessert">DESSERT</flux:navbar.item>
-        <flux:navbar.item class="text-white!" href="/shop">ABOUT</flux:navbar.item>
+        <flux:navbar.item class="text-white!" href="/about">ABOUT</flux:navbar.item>
         <flux:navbar.item class="text-white!"href="/testimonial">TESTIMONIAL</flux:navbar.item>
     </flux:navbar>
 

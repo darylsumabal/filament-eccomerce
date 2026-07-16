@@ -1,5 +1,5 @@
 <x-layouts::main-layout>
-    <livewire:coffee />
-
-    <x-footer />
+    <div>
+        testimonial
+    </div>
 </x-layouts::main-layout>
