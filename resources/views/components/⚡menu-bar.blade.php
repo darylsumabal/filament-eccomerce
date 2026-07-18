@@ -15,32 +15,43 @@ new class extends Component {
 };
 
 ?>
+<div class="flex justify-between w-full">
+    <div class="drawer">
+        <input id="my-drawer-1" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content">
+            <label for="my-drawer-1">
+                <flux:icon.bars-3 class=" text-white" />
+            </label>
+        </div>
+        <div class="drawer-side">
+            <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
+            <flux:navlist class=" menu bg-base-200 min-h-full w-80 p-4">
+                <flux:navlist.item icon="home" class="text-black!" href="/">HOME</flux:navlist.item>
 
-<div class="flex text-white! items-center py-10 justify-between w-full">
-    <h1 class="font-bold text-xl font-serif">
-        <a class="link link-hover" href="/">Coffea</a>
-    </h1>
+                <flux:navlist.item icon="coffee" class="text-black!" href="/coffee">COFFEE</flux:navlist.item>
 
-    <flux:navbar>
-        <flux:navbar.item icon="home" class="text-white!" href="/">HOME</flux:navbar.item>
-        <flux:navbar.item icon="coffee" class="text-white!" href="/coffee">COFFEE</flux:navbar.item>
-        <flux:navbar.item icon="dessert" class="text-white!" href="/dessert">DESSERT</flux:navbar.item>
-        <flux:navbar.item icon="info" class="text-white!" href="/about">ABOUT</flux:navbar.item>
-        <flux:navbar.item icon="users" class="text-white!"href="/testimonial">TESTIMONIAL</flux:navbar.item>
-    </flux:navbar>
+                <flux:navlist.item icon="dessert" class="text-black!" href="/dessert">DESSERT</flux:navlist.item>
+
+                <flux:navlist.item icon="info" class="text-black!" href="/about">ABOUT</flux:navlist.item>
+
+                <flux:navlist.item icon="users" class="text-black!"href="/testimonial">TESTIMONIAL</flux:navlist.item>
+            </flux:navlist>
+
+        </div>
+    </div>
 
     <div x-data="cartItem()" x-init="$nextTick(() => availableAddons = JSON.parse($el.dataset.addons))" data-addons="{{ $this->availableAddons->toJson() }}">
-        <div class="drawer drawer-end">
-            <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
+        <div class="drawer">
+            <input id="cart-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
-                <label for="my-drawer-5" class="drawer-button btn bg-white border-0 btn-circle relative">
+                <label for="cart-drawer" class="drawer-button btn bg-white border-0 btn-circle relative">
                     <flux:icon.shopping-cart variant="solid" class="text-black drawer-button" />
                     <span x-show="cart.length > 0" x-text="cart.length"
                         class="absolute -top-1 -right-1 bg-[#2A0000] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"></span>
                 </label>
             </div>
             <div class="drawer-side text-black!">
-                <label for="my-drawer-5" aria-label="close sidebar" class="drawer-overlay"></label>
+                <label for="cart-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
                 <ul class="menu bg-base-200 min-h-full w-80 p-4 space-y-4">
                     <template x-for="(item, index) in cart" :key="index">
                         <li>

@@ -10,8 +10,13 @@
         style="background-image: url('{{ asset('hero_image.png') }}');">
         <div class="flex items-center flex-col bg-cover
         bg-center bg-no-repeat w-full max-w-7xl gap-32">
-            <div class="w-full flex  text-sm mb-6">
-                <livewire:nav-bar />
+            <div class="w-full flex text-sm mb-6">
+                <div class="hidden w-full md:flex">
+                    <livewire:nav-bar />
+                </div>
+                <div class="flex w-full md:hidden">
+                    <livewire:menu-bar />
+                </div>
             </div>
             <div
                 class="flex flex-col justify-center w-full transition-opacity opacity-100 duration-750  text-white gap-6">
