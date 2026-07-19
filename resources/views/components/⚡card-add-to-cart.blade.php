@@ -60,17 +60,18 @@ new class extends Component {
 
 <div x-data="cart()" class="modal  text-black!" id="{{ $modalId }}" popover
     x-on:open-coffee-modal.window="$nextTick(() => $el.showPopover())">
-    <div class="modal-box w-96 bg-[#E2D9C8]! border-2 border-[#e2bf7d]!">
-        <button @click="$el.closest('[popover]').hidePopover()" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    <div class="modal-box w-72  md:w-96 bg-[#E2D9C8]! border-2 border-[#e2bf7d]!">
+        <button @click="$el.closest('[popover]').hidePopover()"
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         @if ($selectedProduct)
             <h3 class="font-bold text-lg">Add {{ $selectedProduct->name }} to cart?</h3>
             <img src="{{ $selectedProduct->image ? Storage::url($selectedProduct->image) : asset('/coffee_alt.jpg') }}"
-                alt="coffee.jpg" class="h-90! w-full rounded-md border-2 border-[#e2bf7d]!" />
+                alt="coffee.jpg" class="h-64 md:h-90! w-full rounded-md border-2 border-[#e2bf7d]!" />
             <p class="py-2 text-sm line-clamp-2">{{ $selectedProduct->description }}</p>
             <p class="font-black mt-2 text-black!">Price: ₱ {{ $selectedProduct->price }}</p>
             <label class="text-black!">Order notes:</label>
             <fieldset class="fieldset">
-                <textarea class="textarea h-24 border-[#e2bf7d]" wire:model="note" placeholder="Enter note..."></textarea>
+                <textarea class="textarea border-[#e2bf7d]" wire:model="note" placeholder="Enter note..."></textarea>
             </fieldset>
         @else
             <p class="py-4">Loading product details...</p>

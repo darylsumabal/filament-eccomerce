@@ -14,12 +14,12 @@
                 <div class="hidden w-full md:flex">
                     <livewire:nav-bar />
                 </div>
-                <div class="flex w-full md:hidden">
+                <div class="flex w-full md:hidden p-2">
                     <livewire:menu-bar />
                 </div>
             </div>
             <div
-                class="flex flex-col justify-center w-full transition-opacity opacity-100 duration-750  text-white gap-6">
+                class="flex flex-col justify-center w-full  transition-opacity opacity-100 duration-750 text-white gap-6 p-2 md:p-0">
                 <p class="tracking-widest">WELCOME</p>
                 <p class="font-bold text-6xl font-serif">We serve the <br /> richest coffee in <br /> the city!</p>
                 <p class="font-extralight ">Lorem ipsum dolor sit amet, consectetur adipisicing <br /> elit, sed do
