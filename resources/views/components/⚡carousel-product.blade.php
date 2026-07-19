@@ -25,7 +25,7 @@ new class extends Component {
     </p>
 
     <div class="carousel rounded-box w-xs md:w-2xl lg:3xl xl:w-6xl space-x-2 text-[#2A0000]">
-        @foreach ($this->items as $item)
+        @forelse ($this->items as $item)
             <div class="carousel-item border-2 rounded-md h-142 w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d]">
                 <div class="p-4 w-full flex flex-col justify-between">
                     <img src="{{ $item->image ? Storage::url($item->image) : asset('/coffee_alt.jpg') }}" alt="coffee.jpg"
@@ -41,6 +41,11 @@ new class extends Component {
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="text-white text-center">
+                <p class="text-2xl font-medium">No items yet!</p>
+            </div>
+        @endforelse
+
     </div>
 </div>
