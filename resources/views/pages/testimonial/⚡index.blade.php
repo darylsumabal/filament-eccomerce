@@ -9,8 +9,7 @@ new #[Layout('layouts::main-layout')] class extends Component {
 ?>
 
 <div>
-    <div>
-        asd
-    </div>
+    testimonial
 
+ 
 </div>

@@ -38,6 +38,4 @@ new #[Layout('layouts::main-layout')] class extends Component {
         <livewire:card-add-to-cart :selectedProduct="$selectedCoffee" modalId="coffee-modal" />
     </div>
 
-    <x-footer />
-
 </div>

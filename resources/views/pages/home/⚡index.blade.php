@@ -11,7 +11,7 @@ new #[Layout('layouts::main-layout')] class extends Component {
     public array $coffeeIds = [];
     public ?Product $selectedDessert = null;
     public array $dessertIds = [];
-    
+
     public function mount()
     {
         $this->coffeeIds = Product::inRandomOrder()
@@ -79,7 +79,7 @@ new #[Layout('layouts::main-layout')] class extends Component {
         <div class="space-y-6">
             <p class="text-3xl font-semibold font-serif">Check Out Our Best <br /> Coffee Beans</p>
             <flux:button href="/coffee" icon:trailing="chevron-double-right"
-                class="rounded-full! text-white! bg-[#2A0000]! text-xs!">
+                class="rounded-full! text-white! bg-[#2A0000]! text-xs!" wire:navigate.hover>
                 Explore Out Products
             </flux:button>
         </div>
@@ -100,199 +100,32 @@ new #[Layout('layouts::main-layout')] class extends Component {
         </div>
 
         <div class="carousel rounded-box w-xs md:w-6xl space-x-2 text-[#2A0000]">
-            <div class="carousel-item border-2 rounded-md h-fit w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
+            @foreach (range(1, 8) as $i)
+                <div class="carousel-item border-2 rounded-md h-fit w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d]">
+                    <div class="p-4 w-full space-y-5">
+                        <div class="flex justify-between">
+                            <div class="flex items-center gap-2">
+                                <flux:avatar circle src="https://github.com/darylsumabal.png" />
+                                <div>
+                                    <p class="font-medium">Daryl Sumabal</p>
+                                    <p class="text-xs">Developer</p>
+                                </div>
+                            </div>
+                            <div class="flex text-amber-400!">
+                                <flux:icon.star variant="mini" />
+                                <flux:icon.star variant="mini" />
+                                <flux:icon.star variant="mini" />
+                                <flux:icon.star variant="mini" />
                             </div>
                         </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
+                        <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
+                            eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                            iste
+                            cum sunt possimus laborum et ut voluptas! </p>
                     </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
                 </div>
-            </div>
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
-
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
-
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
-
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
-
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
-
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
-
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
-                        iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
-
-    <x-footer />
 
 </div>

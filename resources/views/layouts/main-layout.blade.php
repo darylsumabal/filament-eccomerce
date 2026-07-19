@@ -27,13 +27,14 @@
                     tempor
                 </p>
                 <flux:button href="/coffee"
-                    class="w-32! h-12! font-medium! bg-white! text-black! rounded-full! p-2! text-sm!">Order Now
+                    class="w-32! h-12! font-medium! bg-white! text-black! rounded-full! p-2! text-sm!"
+                    wire:navigate.hover>Order Now
                 </flux:button>
             </div>
         </div>
     </div>
     {{ $slot }}
-
+    <x-footer />
     <flux:toast position="top center" />
     @livewireScripts()
     @fluxScripts

@@ -1,5 +1,4 @@
 <x-layouts::main-layout>
-    <div>
-        testimonial
-    </div>
+    <div>asd</div>
+  
 </x-layouts::main-layout>

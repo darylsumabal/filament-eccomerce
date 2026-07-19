@@ -18,15 +18,17 @@ new class extends Component {
 
 <div class="flex text-white! items-center py-10 justify-between w-full">
     <h1 class="font-bold text-xl font-serif">
-        <a class="link link-hover" href="/">Coffea</a>
+        <a class="link link-hover" href="/" wire:navigate.hover>Coffea</a>
     </h1>
 
     <flux:navbar>
-        <flux:navbar.item icon="home" class="text-white!" href="/">HOME</flux:navbar.item>
-        <flux:navbar.item icon="coffee" class="text-white!" href="/coffee">COFFEE</flux:navbar.item>
-        <flux:navbar.item icon="dessert" class="text-white!" href="/dessert">DESSERT</flux:navbar.item>
-        <flux:navbar.item icon="info" class="text-white!" href="/about">ABOUT</flux:navbar.item>
-        <flux:navbar.item icon="users" class="text-white!"href="/testimonial">TESTIMONIAL</flux:navbar.item>
+        <flux:navbar.item icon="home" class="text-white!" href="/" wire:navigate.hover>HOME</flux:navbar.item>
+        <flux:navbar.item icon="coffee" class="text-white!" href="/coffee" wire:navigate.hover>COFFEE</flux:navbar.item>
+        <flux:navbar.item icon="dessert" class="text-white!" href="/dessert" wire:navigate.hover>DESSERT
+        </flux:navbar.item>
+        <flux:navbar.item icon="info" class="text-white!" href="/about" wire:navigate.hover>ABOUT</flux:navbar.item>
+        <flux:navbar.item icon="users" class="text-white!"href="/testimonial" wire:navigate.hover>TESTIMONIAL
+        </flux:navbar.item>
     </flux:navbar>
 
     <div x-data="cartItem()" x-init="$nextTick(() => availableAddons = JSON.parse($el.dataset.addons))" data-addons="{{ $this->availableAddons->toJson() }}">
@@ -99,7 +101,7 @@ new class extends Component {
 
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
                     <li x-show="cart.length !== 0">
-                        <flux:button href="/checkout">Checkout</flux:button>
+                        <flux:button href="/checkout" wire:navigate.hover>Checkout</flux:button>
                     </li>
                 </ul>
             </div>

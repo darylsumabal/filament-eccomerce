@@ -26,15 +26,20 @@ new class extends Component {
         <div class="drawer-side">
             <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
             <flux:navlist class="menu bg-base-200 min-h-full w-72 p-4">
-                <flux:navlist.item icon="home" class="text-black!" href="/">HOME</flux:navlist.item>
+                <flux:navlist.item icon="home" class="text-black!" href="/" wire:navigate.hover>HOME
+                </flux:navlist.item>
 
-                <flux:navlist.item icon="coffee" class="text-black!" href="/coffee">COFFEE</flux:navlist.item>
+                <flux:navlist.item icon="coffee" class="text-black!" href="/coffee" wire:navigate.hover>COFFEE
+                </flux:navlist.item>
 
-                <flux:navlist.item icon="dessert" class="text-black!" href="/dessert">DESSERT</flux:navlist.item>
+                <flux:navlist.item icon="dessert" class="text-black!" href="/dessert" wire:navigate.hover>DESSERT
+                </flux:navlist.item>
 
-                <flux:navlist.item icon="info" class="text-black!" href="/about">ABOUT</flux:navlist.item>
+                <flux:navlist.item icon="info" class="text-black!" href="/about" wire:navigate.hover>ABOUT
+                </flux:navlist.item>
 
-                <flux:navlist.item icon="users" class="text-black!"href="/testimonial">TESTIMONIAL</flux:navlist.item>
+                <flux:navlist.item icon="users" class="text-black!"href="/testimonial" wire:navigate.hover>TESTIMONIAL
+                </flux:navlist.item>
             </flux:navlist>
 
         </div>
@@ -109,6 +114,9 @@ new class extends Component {
                     </template>
 
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
+                    <li x-show="cart.length !== 0">
+                        <flux:button href="/checkout" wire:navigate.hover>Checkout</flux:button>
+                    </li>
                 </ul>
             </div>
         </div>
