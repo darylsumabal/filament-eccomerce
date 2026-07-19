@@ -27,7 +27,7 @@ new class extends Component {
         </div>
         <div class="drawer-side text-black!">
             <label for="{{ $drawerId }}" aria-label="close sidebar" class="drawer-overlay"></label>
-            <ul class="menu bg-base-200 min-h-full w-72 p-4 space-y-4">
+            <ul class="menu bg-base-200 min-h-full w-72 md:w-xs p-4 space-y-4">
                 <template x-for="(item, index) in cart" :key="index">
                     <li>
                         <div
