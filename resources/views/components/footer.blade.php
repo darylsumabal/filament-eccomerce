@@ -1,5 +1,5 @@
 <div class="flex justify-center items-center mt-10 bg-[#30261C] text-white md:h-72">
-    <div class="flex flex-col md:flex-row justify-between w-6xl p-2 md:p-0">
+    <div class="flex flex-col md:flex-row gap-4 lg:gap-0 justify-between w-6xl p-2 xl:p-0">
         <p class="font-bold font-serif text-xl">COFFEE</p>
         <div class="space-y-2">
             <p class="font-bold font-serif text-lg">PRIVACY</p>
@@ -27,7 +27,7 @@
         </div>
         <div class="space-y-2">
             <p class="font-bold font-serif text-lg">SOCIAL MEDIA</p>
-            <div class="flex gap-2">
+            <div class="flex flex-col lg:flex-row gap-2">
                 <p>Instagram</p>
                 <p>Facebook</p>
                 <p>Tiktok</p>

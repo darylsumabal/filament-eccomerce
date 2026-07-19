@@ -24,7 +24,7 @@ new class extends Component {
         {{ $header }}
     </p>
 
-    <div class="carousel rounded-box w-xs md:w-6xl space-x-2 text-[#2A0000]">
+    <div class="carousel rounded-box w-xs md:w-2xl lg:3xl xl:w-6xl space-x-2 text-[#2A0000]">
         @foreach ($this->items as $item)
             <div class="carousel-item border-2 rounded-md h-142 w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d]">
                 <div class="p-4 w-full flex flex-col justify-between">
