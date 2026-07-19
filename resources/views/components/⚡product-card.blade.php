@@ -9,9 +9,9 @@ new class extends Component {
 };
 ?>
 
-<div class="grid grid-cols-4 items-center gap-4">
+<div class="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
     @foreach ($products as $product)
-        <div class="border-2 rounded-md h-142 w-90 bg-[#E2D9C8] border-[#e2bf7d] ">
+        <div class="border-2 rounded-md h-142 w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d] ">
             <div class="p-4 w-full flex flex-col justify-between h-full">
                 <img src="{{ $product->image ? Storage::url($product->image) : asset('/product.jpg') }}" alt="product.jpg"
                     class="h-90 rounded-md w-full" />
