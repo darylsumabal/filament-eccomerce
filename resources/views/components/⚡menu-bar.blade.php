@@ -20,7 +20,7 @@ new class extends Component {
         <input id="my-drawer-1" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content">
             <label for="my-drawer-1">
-                <flux:icon.bars-3 class=" text-white" />
+                <flux:icon.bars-3 class="size-10  text-white" />
             </label>
         </div>
         <div class="drawer-side">

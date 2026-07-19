@@ -28,7 +28,7 @@ new class extends Component {
             </div>
         </div>
     @empty
-        <div class="text-white text-center">
+        <div class="text-black text-center">
             <p class="text-2xl font-medium">No items yet!</p>
         </div>
     @endforelse
