@@ -26,12 +26,12 @@ new class extends Component {
 
     <div class="carousel rounded-box w-xs md:w-2xl lg:3xl xl:w-6xl space-x-2 text-[#2A0000]">
         @forelse ($this->items as $item)
-            <div class="carousel-item border-2 rounded-md h-142 w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d] card">
+            <div class="carousel-item border-2 rounded-md h-fit w-xs md:w-64 bg-[#E2D9C8] border-[#e2bf7d] card">
                 <div class="p-4 w-full flex flex-col justify-between card-body">
                     <div class="hover-3d">
                         <figure>
                             <img src="{{ $item->image ? Storage::url($item->image) : asset('/coffee_alt.jpg') }}"
-                                alt="coffee.jpg" class="h-90 rounded-md w-full" />
+                                alt="coffee.jpg" class="h-80 rounded-md w-full" />
                         </figure>
                         <div></div>
                         <div></div>
