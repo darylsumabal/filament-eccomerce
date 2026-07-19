@@ -46,7 +46,7 @@ new class extends Component {
         Flux::toast(duration: 1000, text: 'Coffee added to cart.', variant: 'success');
     }
 
-    public function getCoffee($id)
+    public function getCoffee(int $id)
     {
         $this->selectedProduct = Product::find($id);
     }

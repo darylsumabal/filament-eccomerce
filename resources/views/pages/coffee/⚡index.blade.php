@@ -23,7 +23,7 @@ new #[Layout('layouts::main-layout')] class extends Component {
     public function getCoffee(int $id)
     {
         $this->selectedCoffee = Product::find($id);
-        $this->dispatch('open-coffee-modal');
+        $this->dispatch('open-modal', modalId: 'coffee-modal');
     }
 };
 ?>
@@ -37,7 +37,6 @@ new #[Layout('layouts::main-layout')] class extends Component {
 
         <livewire:card-add-to-cart :selectedProduct="$selectedCoffee" modalId="coffee-modal" />
     </div>
-
 
     <x-footer />
 

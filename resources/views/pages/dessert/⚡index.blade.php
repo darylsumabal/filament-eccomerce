@@ -20,12 +20,12 @@ new #[Layout('layouts::main-layout')] class extends Component {
             ->paginate(12);
     }
 
-    public function getDessert($id)
+    public function getDessert(int $id)
     {
         $this->selectedDessert = Product::whereHas('category', function ($query) {
             $query->where('name', 'dessert');
         })->find($id);
-        $this->dispatch('open-coffee-modal');
+        $this->dispatch('open-modal', modalId: 'dessert-modal');
     }
 };
 ?>
