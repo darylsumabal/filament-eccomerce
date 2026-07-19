@@ -1,5 +1,50 @@
-<x-layouts::main-layout>
+<?php
 
+use App\Models\Product;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
+use Livewire\Component;
+
+new #[Layout('layouts::main-layout')] class extends Component {
+    public string $header = 'Our Special Coffee';
+    public ?Product $selectedCoffee = null;
+    public array $coffeeIds = [];
+    public ?Product $selectedDessert = null;
+    public array $dessertIds = [];
+    
+    public function mount()
+    {
+        $this->coffeeIds = Product::inRandomOrder()
+            ->whereHas('category', function ($query) {
+                $query->where('name', '!=', 'dessert');
+            })
+            ->take(8)
+            ->pluck('id')
+            ->toArray();
+        $this->dessertIds = Product::inRandomOrder()
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'dessert');
+            })
+            ->take(8)
+            ->pluck('id')
+            ->toArray();
+    }
+
+    #[Computed]
+    public function coffees()
+    {
+        return Product::whereIn('id', $this->coffeeIds)->get()->sortBy(fn($p) => array_search($p->id, $this->coffeeIds))->values();
+    }
+
+    #[Computed]
+    public function desserts()
+    {
+        return Product::whereIn('id', $this->dessertIds)->get()->sortBy(fn($p) => array_search($p->id, $this->dessertIds))->values();
+    }
+};
+?>
+
+<div>
     <div class="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-32 bg-[#E2D9C8] py-12">
         <div class="text-center space-y-2 flex flex-col items-center">
             <img src="coffee.png" alt="coffee.png" class="h-16">
@@ -20,11 +65,11 @@
     </div>
 
     <div>
-        <livewire:carousel-coffee />
+        <livewire:carousel-product modalId="coffee-modal" :selectedCoffee="$selectedCoffee" :items="$this->coffees" />
     </div>
 
     <div>
-        <livewire:carousel-dessert />
+        <livewire:carousel-product header="Our Special Dessert" modalId="dessert-modal" :items="$this->desserts" />
     </div>
 
     <div class="flex justify-between items-center h-64 mt-10 bg-[#E2D9C8] px-2">
@@ -73,7 +118,8 @@
                         </div>
                     </div>
                     <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
                         cum sunt possimus laborum et ut voluptas! </p>
                 </div>
             </div>
@@ -95,30 +141,8 @@
                         </div>
                     </div>
                     <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
-                        cum sunt possimus laborum et ut voluptas! </p>
-                </div>
-            </div>
-
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
-                <div class="p-4 w-full space-y-5">
-                    <div class="flex justify-between">
-                        <div class="flex items-center gap-2">
-                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
-                            <div>
-                                <p class="font-medium">Daryl Sumabal</p>
-                                <p class="text-xs">Developer</p>
-                            </div>
-                        </div>
-                        <div class="flex text-amber-400!">
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                            <flux:icon.star variant="mini" />
-                        </div>
-                    </div>
-                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
                         cum sunt possimus laborum et ut voluptas! </p>
                 </div>
             </div>
@@ -141,7 +165,8 @@
                         </div>
                     </div>
                     <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
                         cum sunt possimus laborum et ut voluptas! </p>
                 </div>
             </div>
@@ -164,7 +189,8 @@
                         </div>
                     </div>
                     <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
                         cum sunt possimus laborum et ut voluptas! </p>
                 </div>
             </div>
@@ -187,7 +213,8 @@
                         </div>
                     </div>
                     <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
                         cum sunt possimus laborum et ut voluptas! </p>
                 </div>
             </div>
@@ -210,7 +237,8 @@
                         </div>
                     </div>
                     <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
                         cum sunt possimus laborum et ut voluptas! </p>
                 </div>
             </div>
@@ -233,7 +261,32 @@
                         </div>
                     </div>
                     <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
-                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo iste
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
+                        cum sunt possimus laborum et ut voluptas! </p>
+                </div>
+            </div>
+
+            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
+                <div class="p-4 w-full space-y-5">
+                    <div class="flex justify-between">
+                        <div class="flex items-center gap-2">
+                            <flux:avatar circle src="https://github.com/darylsumabal.png" />
+                            <div>
+                                <p class="font-medium">Daryl Sumabal</p>
+                                <p class="text-xs">Developer</p>
+                            </div>
+                        </div>
+                        <div class="flex text-amber-400!">
+                            <flux:icon.star variant="mini" />
+                            <flux:icon.star variant="mini" />
+                            <flux:icon.star variant="mini" />
+                            <flux:icon.star variant="mini" />
+                        </div>
+                    </div>
+                    <p class="text-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus placeat ab
+                        eum eveniet blanditiis voluptatem fugit nesciunt tenetur vitae veniam! Corrupti explicabo
+                        iste
                         cum sunt possimus laborum et ut voluptas! </p>
                 </div>
             </div>
@@ -241,4 +294,5 @@
     </div>
 
     <x-footer />
-</x-layouts::main-layout>
+
+</div>

@@ -98,6 +98,9 @@ new class extends Component {
                     </template>
 
                     <li x-show="cart.length === 0"><a>Your cart is empty</a></li>
+                    <li x-show="cart.length !== 0">
+                        <flux:button href="/checkout">Checkout</flux:button>
+                    </li>
                 </ul>
             </div>
         </div>

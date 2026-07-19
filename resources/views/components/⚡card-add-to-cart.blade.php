@@ -42,6 +42,7 @@ new class extends Component {
 
         $this->reset(['addons', 'note']);
         $this->quantity = 1;
+        $this->dispatch('close-modal', modalId: $this->modalId);
         Flux::toast(duration: 1000, text: 'Coffee added to cart.', variant: 'success');
     }
 
@@ -59,7 +60,8 @@ new class extends Component {
 ?>
 
 <div x-data="cart()" class="modal  text-black!" id="{{ $modalId }}" popover
-    x-on:open-coffee-modal.window="$nextTick(() => $el.showPopover())">
+    x-on:open-modal.window="$event.detail.modalId === '{{ $modalId }}' && $nextTick(() => $el.showPopover())"
+    x-on:close-modal.window="$event.detail.modalId === '{{ $modalId }}' && $el.hidePopover()">
     <div class="modal-box w-72  md:w-96 bg-[#E2D9C8]! border-2 border-[#e2bf7d]!">
         <button @click="$el.closest('[popover]').hidePopover()"
             class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

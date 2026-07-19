@@ -4,8 +4,9 @@ use App\Models\Product;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
 
-new class extends Component {
+new #[Layout('layouts::main-layout')] class extends Component {
     public ?Product $selectedCoffee = null;
     use WithPagination;
 
@@ -25,14 +26,19 @@ new class extends Component {
         $this->dispatch('open-coffee-modal');
     }
 };
-
 ?>
 
-<div class="flex flex-col justify-center items-center mt-10 gap-4">
+<div>
+    <div class="flex flex-col justify-center items-center mt-10 gap-4">
 
-    <livewire:product-card :products="$this->coffees->getCollection()" action="getCoffee" />
+        <livewire:product-card :products="$this->coffees->getCollection()" action="getCoffee" />
 
-    {{ $this->coffees->links() }}
+        {{ $this->coffees->links() }}
 
-    <livewire:card-add-to-cart :selectedProduct="$selectedCoffee" modalId="coffee-modal" />
+        <livewire:card-add-to-cart :selectedProduct="$selectedCoffee" modalId="coffee-modal" />
+    </div>
+
+
+    <x-footer />
+
 </div>

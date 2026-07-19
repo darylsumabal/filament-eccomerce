@@ -2,10 +2,11 @@
 
 use App\Models\Product;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-new class extends Component {
+new #[Layout('layouts::main-layout')] class extends Component {
     public ?Product $selectedDessert = null;
     use WithPagination;
 
@@ -29,11 +30,15 @@ new class extends Component {
 };
 ?>
 
-<div class="flex flex-col justify-center items-center mt-10 gap-4">
+<div>
+    <div class="flex flex-col justify-center items-center mt-10 gap-4">
 
-    <livewire:product-card :products="$this->desserts->getCollection()" action="getDessert" />
+        <livewire:product-card :products="$this->desserts->getCollection()" action="getDessert" />
 
-    {{ $this->desserts->links() }}
+        {{ $this->desserts->links() }}
 
-    <livewire:card-add-to-cart :selectedProduct="$selectedDessert" modalId="dessert-modal" />
+        <livewire:card-add-to-cart :selectedProduct="$selectedDessert" modalId="dessert-modal" />
+    </div>
+
+    <x-footer />
 </div>
