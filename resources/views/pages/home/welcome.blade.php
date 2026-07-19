@@ -7,15 +7,15 @@
         </div>
         <div class="text-center space-y-2 flex flex-col items-center">
             <img src="cup.png" alt="" class="h-16">
-            <p class="font-medium  text-sm">Hot Coffee</p>
+            <p class="font-medium  text-sm">Cold Coffee</p>
         </div>
         <div class="text-center space-y-2 flex flex-col items-center">
             <img src="cup2.png" alt="" class="h-16">
-            <p class="font-medium  text-sm">Hot Coffee</p>
+            <p class="font-medium  text-sm">Cup Coffee</p>
         </div>
         <div class="text-center space-y-2 flex flex-col items-center">
             <img src="cake.png" alt="" class="h-16">
-            <p class="font-medium  text-sm">Hot Coffee</p>
+            <p class="font-medium  text-sm">Dessert</p>
         </div>
     </div>
 
