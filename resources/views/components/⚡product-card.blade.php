@@ -13,10 +13,20 @@ new class extends Component {
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4">
     @forelse ($products as $product)
-        <div class="border-2 rounded-md h-142 w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d] ">
+        <div class="border-2 rounded-md h-142 w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d]">
             <div class="p-4 w-full flex flex-col justify-between h-full">
-                <img src="{{ $product->image ? Storage::url($product->image) : asset('/product.jpg') }}" alt="product.jpg"
-                    class="h-90 rounded-md w-full" />
+                <figure class="hover-3d">
+                    <img src="{{ $product->image ? Storage::url($product->image) : asset('/product.jpg') }}"
+                        alt="product.jpg" class="h-90 rounded-md w-full  " />
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </figure>
                 <p class="text-2xl font-black">{{ $product->name }}</p>
                 <p class="font-medium line-clamp-1 break-all">{{ $product->description }}</p>
                 <div class="flex items-center justify-between">
@@ -26,6 +36,7 @@ new class extends Component {
                         cart</button>
                 </div>
             </div>
+
         </div>
     @empty
         <div class="text-black text-center">
