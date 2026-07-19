@@ -1,5 +1,4 @@
 <x-layouts::main-layout>
-    <livewire:coffee />
-
-    <x-footer />
+    <div>asd</div>
+  
 </x-layouts::main-layout>
