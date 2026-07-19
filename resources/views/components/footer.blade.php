@@ -1,5 +1,5 @@
-<div class="flex justify-center items-center mt-10 bg-[#30261C] text-white h-72">
-    <div class="flex justify-between w-6xl">
+<div class="flex justify-center items-center mt-10 bg-[#30261C] text-white md:h-72">
+    <div class="flex flex-col md:flex-row justify-between w-6xl p-2 md:p-0">
         <p class="font-bold font-serif text-xl">COFFEE</p>
         <div class="space-y-2">
             <p class="font-bold font-serif text-lg">PRIVACY</p>

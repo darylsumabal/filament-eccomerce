@@ -25,7 +25,7 @@ new class extends Component {
         </div>
         <div class="drawer-side">
             <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
-            <flux:navlist class=" menu bg-base-200 min-h-full w-80 p-4">
+            <flux:navlist class="menu bg-base-200 min-h-full w-72 p-4">
                 <flux:navlist.item icon="home" class="text-black!" href="/">HOME</flux:navlist.item>
 
                 <flux:navlist.item icon="coffee" class="text-black!" href="/coffee">COFFEE</flux:navlist.item>
@@ -52,7 +52,7 @@ new class extends Component {
             </div>
             <div class="drawer-side text-black!">
                 <label for="cart-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-                <ul class="menu bg-base-200 min-h-full w-80 p-4 space-y-4">
+                <ul class="menu bg-base-200 min-h-full w-72 p-4 space-y-4">
                     <template x-for="(item, index) in cart" :key="index">
                         <li>
                             <div

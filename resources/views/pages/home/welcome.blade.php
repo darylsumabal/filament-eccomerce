@@ -1,30 +1,34 @@
 <x-layouts::main-layout>
 
-    <div class="flex justify-center gap-32 bg-[#E2D9C8] py-12">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-32 bg-[#E2D9C8] py-12">
         <div class="text-center space-y-2 flex flex-col items-center">
-            <img src="coffee.png" alt="" class="h-16">
+            <img src="coffee.png" alt="coffee.png" class="h-16">
             <p class="font-medium text-sm">Hot Coffee</p>
         </div>
         <div class="text-center space-y-2 flex flex-col items-center">
-            <img src="cup.png" alt="" class="h-16">
-            <p class="font-medium  text-sm">Hot Coffee</p>
+            <img src="cup.png" alt="coffee.png" class="h-16">
+            <p class="font-medium  text-sm">Cold Coffee</p>
         </div>
         <div class="text-center space-y-2 flex flex-col items-center">
-            <img src="cup2.png" alt="" class="h-16">
-            <p class="font-medium  text-sm">Hot Coffee</p>
+            <img src="cup2.png" alt="coffee.png" class="h-16">
+            <p class="font-medium  text-sm">Cup Coffee</p>
         </div>
         <div class="text-center space-y-2 flex flex-col items-center">
-            <img src="cake.png" alt="" class="h-16">
-            <p class="font-medium  text-sm">Hot Coffee</p>
+            <img src="cake.png" alt="dessert.png" class="h-16">
+            <p class="font-medium  text-sm">Dessert</p>
         </div>
     </div>
 
-    <livewire:carousel-coffee />
-    <livewire:carousel-dessert  />
+    <div>
+        <livewire:carousel-coffee />
+    </div>
 
+    <div>
+        <livewire:carousel-dessert />
+    </div>
 
-    <div class="flex justify-between items-center h-64 mt-10 bg-[#E2D9C8] ">
-        <div>
+    <div class="flex justify-between items-center h-64 mt-10 bg-[#E2D9C8] px-2">
+        <div class="hidden md:block">
             <img src="beans_hand.png" alt="" class="h-64">
         </div>
         <div class="space-y-6">
@@ -34,7 +38,7 @@
                 Explore Out Products
             </flux:button>
         </div>
-        <div>
+        <div class="hidden md:block">
             <img src="beans.png" alt="" class="h-64">
         </div>
     </div>
@@ -50,8 +54,8 @@
             </p>
         </div>
 
-        <div class="carousel rounded-box w-6xl space-x-2 text-[#2A0000]">
-            <div class="carousel-item border-2 rounded-md h-fit w-90 bg-[#E2D9C8] border-[#e2bf7d]">
+        <div class="carousel rounded-box w-xs md:w-6xl space-x-2 text-[#2A0000]">
+            <div class="carousel-item border-2 rounded-md h-fit w-xs md:w-90 bg-[#E2D9C8] border-[#e2bf7d]">
                 <div class="p-4 w-full space-y-5">
                     <div class="flex justify-between">
                         <div class="flex items-center gap-2">
