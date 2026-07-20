@@ -79,7 +79,7 @@ new class extends Component {
             <p class="py-4">Loading product details...</p>
         @endif
         <div class="mt-4 ">
-            <div class="h-24 overflow-y-scroll ">
+            <div class="h-24 overflow-y-scroll  scrollbar-thin">
                 @foreach ($this->availableAddons as $addon)
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input wire:model="addons" type="checkbox" wire:key="addon-{{ $addon->id }}"

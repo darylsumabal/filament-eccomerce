@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" class="scrollbar-thumb-[#2A0000]! scroll-smooth!  scrollbar-thin!">
 
 <head>
     @include('partials.head')
 </head>
 
-<body class="bg-[#F5F5F5] text-[#1b1b18]">
+<body class="bg-[#F5F5F5] text-[#1b1b18] ">
     <div class="flex min-h-screen flex-col bg-cover bg-center bg-no-repeat items-center"
         style="background-image: url('{{ asset('hero_image.png') }}');">
         <div class="flex items-center flex-col bg-cover
