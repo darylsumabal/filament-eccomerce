@@ -18,7 +18,7 @@ class CoffeeForm
                 FileUpload::make('image')
                     ->label('Image')
                     ->image()
-                    ->disk('public')
+                    ->disk('s3')
                     ->directory('products')
                     ->visibility('public')
                     ->required()
