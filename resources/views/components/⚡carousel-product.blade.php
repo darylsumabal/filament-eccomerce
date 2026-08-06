@@ -30,7 +30,7 @@ new class extends Component {
                 <div class="p-4 w-full flex flex-col justify-between card-body">
                     <div class="hover-3d">
                         <figure>
-                            <img src="{{ $item->image ? Storage::url($item->image) : asset('/coffee_alt.jpg') }}"
+                            <img src="{{ $item->image ? Storage::disk('s3')->url($item->image) : asset('/coffee_alt.jpg') }}"
                                 alt="coffee.jpg" class="h-80 rounded-md w-full" />
                         </figure>
                         <div></div>
