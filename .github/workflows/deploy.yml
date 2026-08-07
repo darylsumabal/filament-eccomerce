@@ -1,0 +1,35 @@
+name: Aws Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+
+          script: cd /var/www/html/filament-eccomerce
+
+            git pull origin main
+
+            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+            npm ci
+
+            npm run build
+
+            php artisan migrate --force
+
+            php artisan optimize
+
+            sudo systemctl reload php8.5-fpm
+            sudo systemctl reload nginx
