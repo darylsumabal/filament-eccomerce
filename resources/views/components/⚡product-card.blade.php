@@ -17,7 +17,7 @@ new class extends Component {
             <div class="w-full flex flex-col justify-between h-full card-body">
                 <div class="hover-3d">
                     <figure>
-                        <img src="{{ $product->image ? Storage::url($product->image) : asset('/product.jpg') }}"
+                        <img src="{{ $product->image ? Storage::disk('s3')->url($product->image) : asset('/product.jpg') }}"
                             alt="product.jpg" class="h-90 rounded-md w-full" />
                     </figure>
                     <div></div>

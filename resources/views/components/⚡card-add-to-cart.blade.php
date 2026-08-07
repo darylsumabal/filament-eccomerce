@@ -67,7 +67,7 @@ new class extends Component {
             class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         @if ($selectedProduct)
             <h3 class="font-bold text-lg">Add {{ $selectedProduct->name }} to cart?</h3>
-            <img src="{{ $selectedProduct->image ? Storage::url($selectedProduct->image) : asset('/coffee_alt.jpg') }}"
+            <img src="{{ $selectedProduct->image ? Storage::disk('s3')->url($selectedProduct->image) : asset('/coffee_alt.jpg') }}"
                 alt="coffee.jpg" class="h-64 md:h-90! w-full rounded-md border-2 border-[#e2bf7d]!" />
             <p class="py-2 text-sm line-clamp-2">{{ $selectedProduct->description }}</p>
             <p class="font-black mt-2 text-black!">Price: ₱ {{ $selectedProduct->price }}</p>
@@ -116,18 +116,22 @@ new class extends Component {
             Alpine.data('cart', () => ({
                 cart: Alpine.$persist([]).as('cart-items'),
                 init() {
-                    // Listen to the window event safely
+                    this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]');
+
                     window.addEventListener('add-to-cart', (event) => {
                         const newItem = event.detail?.item;
 
                         if (newItem) {
-                            this.cart.push(newItem);
+                            this.cart = [...JSON.parse(localStorage.getItem('cart-items') || '[]'), newItem];
 
-                            // Let the DOM update, then notify the navbar
                             this.$nextTick(() => {
                                 window.dispatchEvent(new CustomEvent('cart-updated'));
                             });
                         }
+                    });
+
+                    window.addEventListener('cart-updated', () => {
+                        this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]');
                     });
                 }
             }))

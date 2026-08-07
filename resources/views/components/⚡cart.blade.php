@@ -27,13 +27,13 @@ new class extends Component {
         </div>
         <div class="drawer-side text-black!">
             <label for="{{ $drawerId }}" aria-label="close sidebar" class="drawer-overlay"></label>
-            <ul class="menu bg-base-200 min-h-full w-72 md:w-xs p-4 space-y-4">
+            <ul class=" menu bg-base-200 min-h-full w-72 md:w-xs p-4 space-y-4">
                 <template x-for="(item, index) in cart" :key="index">
                     <li>
                         <div
                             class="flex flex-col justify-between items-center border-2 border-[#e2bf7d] w-full  p-0 bg-[#E2D9C8]">
                             <div class="w-full aspect-square overflow-hidden">
-                                <img :src="'{{ Storage::url('') }}' + (item.coffee?.image)" alt="coffee.jpg"
+                                <img :src="'{{ config('filesystems.disks.s3.url') }}/' + (item.coffee?.image)" alt="coffee.jpg"
                                     class="w-full h-full">
                             </div>
 
@@ -143,6 +143,7 @@ new class extends Component {
                 this.editingAddonIndex = null
                 this.selectedAddonIds = []
                 this.$refs.addonDialog.close()
+                this.notifyUpdated()
             },
             itemTotal(item) {
                 if (!item) return 0;
@@ -165,17 +166,25 @@ new class extends Component {
                     array.splice(index, 1)
                     localStorage.setItem('cart-items', JSON.stringify(array))
                     this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    this.notifyUpdated()
                 }
             },
             incrementQuantity(index) {
                 this.cart[index].quantity = Number(this.cart[index].quantity || 1) + 1
                 localStorage.setItem('cart-items', JSON.stringify(this.cart))
+                this.notifyUpdated()
             },
             decrementQuantity(index) {
                 if (this.cart[index].quantity > 1) {
                     this.cart[index].quantity = Number(this.cart[index].quantity) - 1
                     localStorage.setItem('cart-items', JSON.stringify(this.cart))
+                    this.notifyUpdated()
                 }
+            },
+            notifyUpdated() {
+                this.$nextTick(() => {
+                    window.dispatchEvent(new CustomEvent('cart-updated'))
+                })
             }
         }))
     })
