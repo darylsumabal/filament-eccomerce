@@ -27,22 +27,20 @@ new class extends Component {
         </div>
         <div class="drawer-side text-black!">
             <label for="{{ $drawerId }}" aria-label="close sidebar" class="drawer-overlay"></label>
-            <ul class=" menu bg-base-200 min-h-full w-72 md:w-xs p-4 space-y-4">
+            <ul class="menu bg-base-200 min-h-full w-72 md:w-xs p-4 space-y-4">
                 <template x-for="(item, index) in cart" :key="index">
-                    <li>
+                    <li class="w-full">
                         <div
                             class="flex flex-col justify-between items-center border-2 border-[#e2bf7d] w-full  p-0 bg-[#E2D9C8]">
                             <div class="w-full aspect-square overflow-hidden">
-                                <img :src="'{{ config('filesystems.disks.s3.url') }}/' + (item.coffee?.image)" alt="coffee.jpg"
-                                    class="w-full h-full">
+                                <img :src="'{{ config('filesystems.disks.s3.url') }}/' + (item.coffee?.image)"
+                                    alt="coffee.jpg" class="w-full h-full">
                             </div>
-
                             <flux:button size="xs" icon="plus-circle"
                                 class="bg-[#2A0000]! text-white! rounded-md! px-4! py-2! text-sm! border-[#e2bf7d]!"
                                 x-on:click="openAddonModal(index)">
                                 Addons
                             </flux:button>
-
                             <div class="p-2 w-full space-y-2">
                                 <label>Addons</label>
                                 <template x-for="(addon,addonIndex) in item.addons" :key="addonIndex">
@@ -68,7 +66,6 @@ new class extends Component {
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <flux:button x-on:click="removeItem(index)" icon="trash" variant="danger" />
-
                                     <div class="flex items-center gap-1">
                                         <flux:button icon="minus-circle" class="bg-[#2A0000]! text-white!"
                                             x-on:click="decrementQuantity(index)" />
@@ -78,7 +75,6 @@ new class extends Component {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </li>
                 </template>
@@ -122,71 +118,71 @@ new class extends Component {
     </dialog>
 </div>
 @verbatim
-<script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('cartItem', () => ({
-            cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
-            availableAddons: [],
-            editingAddonIndex: null,
-            selectedAddonIds: [],
-            openAddonModal(index) {
-                this.editingAddonIndex = index
-                this.selectedAddonIds = (this.cart[index].addons || []).map(a => a.id)
-                this.$refs.addonDialog.showModal()
-            },
-            applyAddons() {
-                if (this.editingAddonIndex === null) return
-                const selected = this.availableAddons.filter(a => this.selectedAddonIds.includes(a
-                    .id))
-                this.cart[this.editingAddonIndex].addons = selected
-                localStorage.setItem('cart-items', JSON.stringify(this.cart))
-                this.editingAddonIndex = null
-                this.selectedAddonIds = []
-                this.$refs.addonDialog.close()
-                this.notifyUpdated()
-            },
-            itemTotal(item) {
-                if (!item) return 0;
-                const coffeePrice = Number(item.coffee?.price || 0);
-                const quantity = Number(item.quantity || 1);
-                const addonsPrice = (item.addons || []).reduce((addonSum, addon) => {
-                    return addonSum + Number(addon.price || 0);
-                }, 0);
-                return Number((quantity * coffeePrice) + addonsPrice).toFixed(2);
-            },
-            init() {
-                window.addEventListener('cart-updated', () => {
-                    this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
-                })
-            },
-            removeItem(index) {
-                const data = localStorage.getItem('cart-items')
-                if (data) {
-                    const array = JSON.parse(data)
-                    array.splice(index, 1)
-                    localStorage.setItem('cart-items', JSON.stringify(array))
-                    this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('cartItem', () => ({
+                cart: JSON.parse(localStorage.getItem('cart-items') || '[]'),
+                availableAddons: [],
+                editingAddonIndex: null,
+                selectedAddonIds: [],
+                openAddonModal(index) {
+                    this.editingAddonIndex = index
+                    this.selectedAddonIds = (this.cart[index].addons || []).map(a => a.id)
+                    this.$refs.addonDialog.showModal()
+                },
+                applyAddons() {
+                    if (this.editingAddonIndex === null) return
+                    const selected = this.availableAddons.filter(a => this.selectedAddonIds.includes(a
+                        .id))
+                    this.cart[this.editingAddonIndex].addons = selected
+                    localStorage.setItem('cart-items', JSON.stringify(this.cart))
+                    this.editingAddonIndex = null
+                    this.selectedAddonIds = []
+                    this.$refs.addonDialog.close()
                     this.notifyUpdated()
-                }
-            },
-            incrementQuantity(index) {
-                this.cart[index].quantity = Number(this.cart[index].quantity || 1) + 1
-                localStorage.setItem('cart-items', JSON.stringify(this.cart))
-                this.notifyUpdated()
-            },
-            decrementQuantity(index) {
-                if (this.cart[index].quantity > 1) {
-                    this.cart[index].quantity = Number(this.cart[index].quantity) - 1
+                },
+                itemTotal(item) {
+                    if (!item) return 0;
+                    const coffeePrice = Number(item.coffee?.price || 0);
+                    const quantity = Number(item.quantity || 1);
+                    const addonsPrice = (item.addons || []).reduce((addonSum, addon) => {
+                        return addonSum + Number(addon.price || 0);
+                    }, 0);
+                    return Number((quantity * coffeePrice) + addonsPrice).toFixed(2);
+                },
+                init() {
+                    window.addEventListener('cart-updated', () => {
+                        this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                    })
+                },
+                removeItem(index) {
+                    const data = localStorage.getItem('cart-items')
+                    if (data) {
+                        const array = JSON.parse(data)
+                        array.splice(index, 1)
+                        localStorage.setItem('cart-items', JSON.stringify(array))
+                        this.cart = JSON.parse(localStorage.getItem('cart-items') || '[]')
+                        this.notifyUpdated()
+                    }
+                },
+                incrementQuantity(index) {
+                    this.cart[index].quantity = Number(this.cart[index].quantity || 1) + 1
                     localStorage.setItem('cart-items', JSON.stringify(this.cart))
                     this.notifyUpdated()
+                },
+                decrementQuantity(index) {
+                    if (this.cart[index].quantity > 1) {
+                        this.cart[index].quantity = Number(this.cart[index].quantity) - 1
+                        localStorage.setItem('cart-items', JSON.stringify(this.cart))
+                        this.notifyUpdated()
+                    }
+                },
+                notifyUpdated() {
+                    this.$nextTick(() => {
+                        window.dispatchEvent(new CustomEvent('cart-updated'))
+                    })
                 }
-            },
-            notifyUpdated() {
-                this.$nextTick(() => {
-                    window.dispatchEvent(new CustomEvent('cart-updated'))
-                })
-            }
-        }))
-    })
-</script>
+            }))
+        })
+    </script>
 @endverbatim
